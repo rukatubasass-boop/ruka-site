@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUKA — 思いつきを、動く仕組みへ。</title>
+<meta name="description" content="AIを相棒に、企画から実装・運用まで。つくったものと、その過程を公開していく個人サイト。">
+<meta name="theme-color" content="#f4f1ea">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2317140f'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='34' fill='%23f4f1ea'%3ER%3C/text%3E%3Crect x='0' y='56' width='64' height='8' fill='%23df5f1b'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RUKA — 思いつきを、動く仕組みへ。">
+<meta property="og:description" content="AIを相棒に、企画から実装・運用まで。つくったものと過程を公開していく。">
+<meta property="og:image" content="assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RUKA — 思いつきを、動く仕組みへ。">
+<meta name="twitter:image" content="assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ===== 固定ナビ ===== -->
+<nav class="site-nav" id="site-nav">
+  <a class="brand" href="#top">RUKA</a>
+  <div class="nav-links" aria-label="セクションへ移動">
+    <a href="#about">ABOUT</a>
+    <a href="#works">WORKS</a>
+    <a href="#service">SERVICE</a>
+    <a href="#faq">FAQ</a>
+    <a href="#offer" class="nav-cta">START HERE</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-x" href="https://x.com/krk__kr" target="_blank" rel="noopener">X →</a>
+    <button class="nav-menu-btn" id="nav-menu-btn" aria-label="メニューを開く" aria-expanded="false">⋯</button>
+  </div>
+</nav>
+
+<!-- ===== 全画面メニュー（モバイル/⋯ボタン） ===== -->
+<div class="menu-overlay" id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" id="menu-close" aria-label="メニューを閉じる">×</button>
+  <nav class="menu-links">
+    <a href="#about"><span>01</span>ABOUT</a>
+    <a href="#log"><span>02</span>PROCESS LOG</a>
+    <a href="#works"><span>03</span>WORKS</a>
+    <a href="#service"><span>04</span>SERVICE</a>
+    <a href="#faq"><span>05</span>FAQ</a>
+    <a href="#offer"><span>06</span>START HERE</a>
+    <a class="menu-x" href="https://x.com/krk__kr" target="_blank" rel="noopener">X @krk__kr ↗</a>
+  </nav>
+  <p class="menu-foot">RUKA — BUILD IN PUBLIC</p>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <p class="hero-watermark" aria-hidden="true">BUILD<br>IN PUBLIC</p>
+  <span class="hero-orbit orbit-one" aria-hidden="true"></span>
+  <span class="hero-orbit orbit-two" aria-hidden="true"></span>
+
+  <p class="hero-vertical" data-reveal>THINK. BUILD. SHIP.</p>
+
+  <div class="hero-main">
+    <p class="hero-kicker" data-intro>RUKA — AI BUILDER</p>
+    <h1 class="hero-title">
+      <span class="line"><span class="line-inner">思いつきを、</span></span>
+      <span class="line"><span class="line-inner">動く仕組みへ。</span></span>
+    </h1>
+    <p class="hero-desc" data-intro>AIを相棒に、企画から実装・運用まで。<br class="pc-only">つくったものと、その過程を、ここに公開していく。</p>
+    <div class="hero-actions" data-intro>
+      <a class="btn-primary" data-magnet href="#works">作ったものを見る</a>
+      <a class="btn-ghost" data-magnet href="https://x.com/krk__kr" target="_blank" rel="noopener">X @krk__kr →</a>
+    </div>
+  </div>
+
+  <div class="scroll-badge" aria-hidden="true">
+    <svg viewBox="0 0 100 100">
+      <defs><path id="badge-circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+      <text><textPath href="#badge-circ">SCROLL DOWN • BUILD IN PUBLIC • </textPath></text>
+    </svg>
+    <span class="badge-arrow">↓</span>
+  </div>
+
+  <div class="hero-roll" aria-hidden="true">
+    <div class="hero-roll-track">
+      <span>RUKA — BUILD IN PUBLIC —&nbsp;</span>
+      <span>RUKA — BUILD IN PUBLIC —&nbsp;</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="m-group">
+      <span>CLAUDE CODE</span><i>✦</i><span>HYPERFRAMES</span><i>✦</i><span>GSAP</span><i>✦</i><span>FFMPEG</span><i>✦</i><span>PYTHON</span><i>✦</i><span>LAUNCHD</span><i>✦</i><span>X API</span><i>✦</i><span>HTML / CSS</span><i>✦</i>
+    </div>
+    <div class="m-group">
+      <span>CLAUDE CODE</span><i>✦</i><span>HYPERFRAMES</span><i>✦</i><span>GSAP</span><i>✦</i><span>FFMPEG</span><i>✦</i><span>PYTHON</span><i>✦</i><span>LAUNCHD</span><i>✦</i><span>X API</span><i>✦</i><span>HTML / CSS</span><i>✦</i>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about" data-num="01">
+  <div class="about-inner">
+    <div class="section-head">
+      <p class="section-label" data-reveal>ABOUT</p>
+      <h2 data-reveal>つくる人であり、<br>実験台でもある。</h2>
+    </div>
+    <div class="about-body">
+      <p class="about-lead" data-reveal>RUKAは、AIを相棒に企画・実装・運用までひとりで回すビルダー。デザインの相談も、コードを書く作業も、公開後の運用も、その大半をClaude Codeとの対話で進めている。</p>
+      <p data-reveal>ここで公開しているのは、完成品だけじゃない。うまくいった手順も、ハマった落とし穴も、やり直した回数も、そのまま過程ログに残していく。きれいな実績より、再現できる記録のほうが、これから同じことをやる人の役に立つはずだから。</p>
+      <p data-reveal>いま動いているのは、Xの自動投稿システム、動画生成パイプライン、そしてこのサイト。作ったものは、これからもこのページに増えていく。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS LOG ===== -->
+<section class="log" id="log" data-num="02">
+  <div class="log-ticker" aria-hidden="true">
+    <div class="log-ticker-track" id="log-ticker"></div>
+  </div>
+  <div class="section-head">
+    <p class="section-label" data-reveal>PROCESS LOG</p>
+    <h2 data-reveal>過程ログ</h2>
+    <p class="section-note" data-reveal>週イチで追記。きれいな話だけにはしない。</p>
+  </div>
+  <ol class="log-list" id="log-list"></ol>
+</section>
+
+<!-- ===== WORKS ===== -->
+<section class="works" id="works" data-num="03">
+  <div class="section-head">
+    <p class="section-label" data-reveal>WORKS</p>
+    <h2 data-reveal>作ったもの</h2>
+  </div>
+
+  <div class="works-flow">
+
+    <article class="work-row" data-reveal>
+      <div class="work-media">
+        <div class="terminal-frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>tech/logs/x_post_log.jsonl</span></div>
+          <div class="terminal-body">
+            <p><span class="t-time">12:30</span><span class="t-ok">posted ✓</span><span class="t-text">AIに仕事を渡す時のコツは1個だけ。「やり方」じゃなく「完成形」を見せる…</span></p>
+            <p><span class="t-time">17:10</span><span class="t-ok">posted ✓</span><span class="t-text">AIの出力が微妙な時、プロンプトをいじる前に見る所。①渡してる情報が古くないか…</span></p>
+            <p><span class="t-time">21:20</span><span class="t-ok">posted ✓</span><span class="t-text">副業の商品づくり、最初の正解は「自分が今週作ったもの」…</span></p>
+            <p class="t-cursor">▊</p>
+          </div>
+        </div>
+        <p class="media-caption">実際の投稿ログ（2026-06-17・3件とも自動投稿）</p>
+      </div>
+      <div class="work-info">
+        <p class="work-num">01</p>
+        <h3>X自動投稿システム</h3>
+        <dl class="work-rows">
+          <div><dt>課題</dt><dd>毎日の投稿づくりに時間が溶ける。ネタ探しから文面まで、全部手作業だった。</dd></div>
+          <div><dt>解決</dt><dd>毎晩23時にリサーチ→台本生成→予約投稿まで自動で回るパイプラインを構築。</dd></div>
+          <div><dt>結果</dt><dd>人間の仕事は、朝の最終チェックだけになった。</dd></div>
+        </dl>
+        <p class="work-tags">Claude Code / launchd / X API</p>
+      </div>
+    </article>
+
+    <article class="work-row flip" data-reveal>
+      <div class="work-media">
+        <div class="phone-frame">
+          <video src="assets/work-reel.mp4" poster="assets/work-video.png" muted loop playsinline preload="metadata" width="540" height="960" aria-label="実際に生成した縦型リール"></video>
+        </div>
+        <p class="media-caption">実際に生成した縦型リール（カーソルを乗せると再生）</p>
+      </div>
+      <div class="work-info">
+        <p class="work-num">02</p>
+        <h3>動画生成パイプライン</h3>
+        <dl class="work-rows">
+          <div><dt>課題</dt><dd>編集ソフトも撮影素材もなしで、縦型リールを作りたい。</dd></div>
+          <div><dt>解決</dt><dd>HTMLで画面を組んでMP4に書き出すHyperFramesを導入・整備。</dd></div>
+          <div><dt>結果</dt><dd>ナレーション・BGM込みの動画が、素材ゼロから完成するようになった。</dd></div>
+        </dl>
+        <p class="work-tags">HyperFrames / ffmpeg / TTS</p>
+      </div>
+    </article>
+
+    <article class="work-row" data-reveal>
+      <div class="work-media">
+        <div class="browser-frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span>ruka.dev — coming soon</span></div>
+          <img src="assets/work-site.png" alt="このサイトのスクリーンショット" loading="lazy" width="640" height="400">
+        </div>
+        <p class="media-caption">このページ自身（撮影もClaude Codeが実行）</p>
+      </div>
+      <div class="work-info">
+        <p class="work-num">03</p>
+        <h3>このサイト</h3>
+        <dl class="work-rows">
+          <div><dt>課題</dt><dd>外注せずに、自分の"見せられる場所"が欲しい。</dd></div>
+          <div><dt>解決</dt><dd>参考画像と対話だけで、設計→デザイン→実装までClaude Codeと構築。</dd></div>
+          <div><dt>結果</dt><dd>コードを1行も手書きせずに、公開できる状態まで到達。</dd></div>
+        </dl>
+        <p class="work-tags">HTML / CSS / GSAP</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ===== SERVICE ===== -->
+<section class="service" id="service" data-num="04">
+  <div class="section-head">
+    <p class="section-label" data-reveal>SERVICE</p>
+    <h2 data-reveal>できること</h2>
+    <p class="section-note" data-reveal>全部、まず自分の仕組みで実証してから出してる。実物はWORKSの通り。</p>
+  </div>
+
+  <div class="service-list">
+
+    <details class="service-item" data-reveal open>
+      <summary>
+        <span class="sv-num">01</span>
+        <span class="sv-title">SNS導線設計・運用代行</span>
+        <span class="sv-lead">保存で終わるSNSを、予約・来店につながる導線へ</span>
+        <span class="sv-toggle" aria-hidden="true">＋</span>
+      </summary>
+      <div class="sv-body">
+        <p class="sv-desc">投稿代行だけじゃない。初めて見た人が「理解する→信頼する→予約する」順番を設計する。</p>
+        <div class="service-problems">
+          <div class="sv-problem"><span>01</span><p>運用の正解がわからない</p></div>
+          <div class="sv-problem"><span>02</span><p>見られても問い合わせが増えない</p></div>
+          <div class="sv-problem"><span>03</span><p>まずは小さく試したい</p></div>
+        </div>
+        <div class="service-flow">
+          <span>無料診断</span><i>→</i><span>改善提案</span><i>→</i><span>実行支援</span><i>→</i><span>成果確認</span>
+        </div>
+        <div class="price-grid">
+          <div class="price-card">
+            <p class="price-tier">Free</p>
+            <h3>無料診断</h3>
+            <p class="price-amount">¥0</p>
+            <p class="price-desc">改善点3つ、成果導線の仮説、最初に直す場所を提示。</p>
+          </div>
+          <div class="price-card featured">
+            <p class="price-tier">Start</p>
+            <h3>30日改善プラン</h3>
+            <p class="price-amount" data-count="30000" data-prefix="¥" data-suffix="〜">¥30,000〜</p>
+            <p class="price-desc">プロフィール、固定投稿、投稿テーマ、予約/問い合わせ導線、計測設計。</p>
+          </div>
+          <div class="price-card">
+            <p class="price-tier">Growth</p>
+            <h3>月次伴走</h3>
+            <p class="price-amount">要相談</p>
+            <p class="price-desc">月次改善、キャンペーン設計、成果レポート、継続運用。</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="service-item" data-reveal>
+      <summary>
+        <span class="sv-num">02</span>
+        <span class="sv-title">ショート動画制作</span>
+        <span class="sv-lead">素材ゼロから、縦型リールを一気通貫で</span>
+        <span class="sv-toggle" aria-hidden="true">＋</span>
+      </summary>
+      <div class="sv-body">
+        <p class="sv-desc">企画→構成→ナレーション→BGM→編集まで、撮影素材がなくても1本の縦型動画に仕上げる。WORKSの02で動いてるのが実物——自分のリールを同じパイプラインで作ってる。</p>
+        <p class="sv-price-note">料金：内容に応じて相談。まず「1本サンプルで見たい」からでOK。</p>
+      </div>
+    </details>
+
+    <details class="service-item" data-reveal>
+      <summary>
+        <span class="sv-num">03</span>
+        <span class="sv-title">AI導入・自動化構築</span>
+        <span class="sv-lead">毎日手でやってる作業を、AIと仕組みに渡す</span>
+        <span class="sv-toggle" aria-hidden="true">＋</span>
+      </summary>
+      <div class="sv-body">
+        <p class="sv-desc">リサーチ→生成→投稿が毎晩自動で回るX投稿システム（WORKS 01）と同じ考え方で、あなたの業務の繰り返し作業を自動化する。</p>
+        <p class="sv-desc">正直に書くと、他社への提供実績はまだない。自分の業務で毎日回してる仕組みが実績のすべて。だから最初の数件は<strong>モニター価格</strong>で、改善前後を事例として公開OKな方を優先して受ける。</p>
+        <p class="sv-price-note">料金：モニター募集中（事例公開OKの方優先・詳細はDMで）</p>
+      </div>
+    </details>
+
+  </div>
+
+  <a class="service-cta" data-reveal href="https://x.com/krk__kr" target="_blank" rel="noopener">相談する（X DMへ）→</a>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq" data-num="05">
+  <div class="section-head">
+    <p class="section-label" data-reveal>FAQ</p>
+    <h2 data-reveal>よくある質問</h2>
+  </div>
+  <div class="faq-list">
+    <details data-reveal open>
+      <summary>本当にひとりでやってるの？</summary>
+      <p>人間はひとり。ただしClaude Codeが相棒として企画・実装・検証に入っているから、体感は2人チームに近い。</p>
+    </details>
+    <details data-reveal>
+      <summary>コードが書けなくても、ここまで作れる？</summary>
+      <p>このサイト自体がその実験。コードは1行も手書きしていない。設計の意図と参考イメージを言葉で渡すのが人間側の仕事。</p>
+    </details>
+    <details data-reveal>
+      <summary>SNSの投稿代行もできる？</summary>
+      <p>最初は診断と改善提案を中心に進めて、必要に応じて投稿設計や文面作成まで対応する。</p>
+    </details>
+    <details data-reveal>
+      <summary>無料診断だけでも大丈夫？</summary>
+      <p>大丈夫。まず改善点を見てもらって、続けるかどうかはそのあと判断してもらう形。</p>
+    </details>
+    <details data-reveal>
+      <summary>どんな業種が対象？</summary>
+      <p>予約・来店・問い合わせを増やしたい店舗や個人サービス全般。カフェ、美容室、サロン、ジム、スクールなど。</p>
+    </details>
+    <details data-reveal>
+      <summary>相談はどこからすればいい？</summary>
+      <p>X（@krk__kr）のDMが最速。「サイト見た」と一言添えてもらえれば話が早い。</p>
+    </details>
+  </div>
+</section>
+
+<!-- ===== OFFER ===== -->
+<section class="offer" id="offer" data-num="06">
+  <div class="section-head">
+    <p class="section-label" data-reveal>START HERE</p>
+    <h2 data-reveal>「AIで稼ぎたいけど、<br>何から手をつければいいか分からない」<br class="pc-only">人へ。</h2>
+    <p class="section-note" data-reveal>最初の一歩を無料で、その先の全体像を有料で。どっちも、まず自分でやって検証した中身だけ。</p>
+  </div>
+
+  <div class="offer-grid">
+    <article class="offer-card free" data-reveal>
+      <p class="offer-tag">FREE</p>
+      <h3>最初の一歩ロードマップ</h3>
+      <p class="offer-desc">非エンジニアがAIで最初の1週間にやることを、順番に並べた1枚。「何から？」をここで消す。</p>
+      <p class="offer-price">¥0</p>
+      <a class="offer-btn ghost" href="https://x.com/krk__kr" target="_blank" rel="noopener">LINEで受け取る<span class="soon">（準備中・先行案内はDMで）</span></a>
+    </article>
+
+    <article class="offer-card paid" data-reveal>
+      <p class="offer-tag">MAIN</p>
+      <h3>AI販売導線ミニパック</h3>
+      <p class="offer-desc">AIで「作る」の先、「売る」までの導線を、テンプレごとまとめた実践パック。最初の一歩の、その次。</p>
+      <p class="offer-price"><span class="was">早期価格</span>¥2,980<span class="unit">〜</span></p>
+      <a class="offer-btn solid" href="https://x.com/krk__kr" target="_blank" rel="noopener">noteで見る<span class="soon">（近日公開・先行案内はDMで）</span></a>
+    </article>
+  </div>
+
+  <p class="offer-foot" data-reveal>※ どちらもまだ準備中。今は X（<a href="https://x.com/krk__kr" target="_blank" rel="noopener">@krk__kr</a>）のDMで「サイト見た」と一言もらえれば、公開時にいちばん最初に案内します。</p>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <p class="footer-giant" aria-hidden="true">RUKA</p>
+  <div class="footer-grid">
+    <div class="footer-id">
+      <p class="footer-brand">RUKA — BUILD IN PUBLIC</p>
+      <p class="footer-note">AIを相棒に、思いつきを動く仕組みへ。<br>つくったものと過程は、このページに増えていく。</p>
+    </div>
+    <nav class="footer-links" aria-label="サイト内リンク">
+      <a href="#about">About</a>
+      <a href="#log">Process Log</a>
+      <a href="#works">Works</a>
+      <a href="#service">Service</a>
+      <a href="#offer">Start Here</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <nav class="footer-links" aria-label="外部リンク">
+      <a href="https://x.com/krk__kr" target="_blank" rel="noopener">X @krk__kr ↗</a>
+      <a href="#" aria-disabled="true">note（準備中）</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p class="copyright">© 2026 RUKA — built with Claude Code</p>
+    <a class="to-top" href="#top">BACK TO TOP ↑</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="log-data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
