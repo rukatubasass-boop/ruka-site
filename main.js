@@ -53,9 +53,8 @@ if (typeof gsap !== "undefined" && !reduceMotion) {
       .join("");
   });
 
-  // ---- 初回ロード演出：HEROの登場シーケンス（ローダー完了後に発火） ----
-  const intro = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
-  window.__introTL = intro;
+  // ---- 初回ロード演出：HEROの登場シーケンス（即発火） ----
+  const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
   intro
     .from(".hero-kicker", { y: 22, opacity: 0, duration: 0.6 }, 0.15)
     .from(".hero-title .ch", { yPercent: 130, duration: 0.85, stagger: 0.04, ease: "power4.out" }, 0.2)
@@ -80,6 +79,25 @@ if (typeof gsap !== "undefined" && !reduceMotion) {
         repeatRefresh: true,
         delay: gsap.utils.random(0, 1.2),
       });
+    });
+  });
+
+  // ---- スクロール視差：背景と手前に時差を出す（exoape式の浮遊感） ----
+  // ヒーローの巨大ウォーターマークは"背景層"としてゆっくり動く
+  gsap.to(".hero-watermark", {
+    yPercent: 22, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 },
+  });
+  // 下端ローリングネームは逆方向にわずかに流す
+  gsap.to(".hero-roll", {
+    yPercent: -30, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1.4 },
+  });
+  // 作ったものの実物メディアは、テキストより遅れて動く（浮いてる感）
+  gsap.utils.toArray(".work-media").forEach((m) => {
+    gsap.fromTo(m, { yPercent: 6 }, {
+      yPercent: -6, ease: "none",
+      scrollTrigger: { trigger: m.closest(".work-row"), start: "top bottom", end: "bottom top", scrub: 1 },
     });
   });
 
@@ -139,30 +157,44 @@ if (typeof gsap !== "undefined" && !reduceMotion) {
 }
 
 // ---- ローディング（数字カウンター）→ 完了でHERO演出発火 ----
-(function runLoader() {
-  const loader = document.getElementById("loader");
-  const num = document.getElementById("loader-count");
-  const bar = document.getElementById("loader-bar");
-  const finish = () => {
-    if (window.__introTL) window.__introTL.play();
-    else document.querySelectorAll("[data-reveal],[data-intro]").forEach((el) => { el.style.opacity = 1; el.style.transform = "none"; });
-    if (loader) {
-      loader.classList.add("done");
-      setTimeout(() => loader.remove(), 750);
-    }
-  };
-  if (!loader) return finish();
-  if (reduceMotion) { if (num) num.textContent = "100"; if (bar) bar.style.width = "100%"; return finish(); }
-  let n = 0;
-  const tick = () => {
-    n += Math.max(1, Math.round((100 - n) * 0.09));
-    if (n >= 100) n = 100;
-    if (num) num.textContent = String(n);
-    if (bar) bar.style.width = n + "%";
-    if (n < 100) setTimeout(tick, 26);
-    else setTimeout(finish, 260);
-  };
-  setTimeout(tick, 180);
+// ---- Lenis スムーススクロール（exoape式・ぬるっと） ----
+let lenis = null;
+if (typeof Lenis !== "undefined" && !reduceMotion) {
+  lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+  const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  if (typeof ScrollTrigger !== "undefined") {
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+}
+
+// ---- ナビ内リンク：画面フェード切替（14islands式） ----
+(function fadeNav() {
+  const overlay = document.getElementById("page-transition");
+  const links = document.querySelectorAll('a[href^="#"]:not([href="#"])');
+  links.forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href");
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      // メニュー開いてたら閉じる
+      const mo = document.getElementById("menu-overlay");
+      if (mo && mo.classList.contains("open")) mo.classList.remove("open");
+      if (!overlay || reduceMotion) { jumpTo(); return; }
+      overlay.classList.add("active");                 // 幕を下ろす（フェードイン）
+      setTimeout(() => {
+        jumpTo();                                      // 幕の裏で瞬間移動
+        requestAnimationFrame(() => overlay.classList.remove("active")); // 幕を上げる（フェードアウト）
+      }, 430);
+      function jumpTo() {
+        if (lenis) lenis.scrollTo(target, { immediate: true, force: true });
+        else target.scrollIntoView({ behavior: "auto" });
+      }
+    });
+  });
 })();
 
 // ---- スクロール進捗バー ----
@@ -214,30 +246,6 @@ if (window.matchMedia("(pointer: fine)").matches && !reduceMotion) {
       btn.style.transform = "";
     });
   });
-}
-
-// ---- カスタムカーソル（cuberto式・PCのみ） ----
-if (window.matchMedia("(pointer: fine)").matches && !reduceMotion) {
-  const ring = document.createElement("div");
-  ring.className = "cursor-ring";
-  document.body.appendChild(ring);
-  document.body.classList.add("has-cursor");
-  let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-  window.addEventListener("mousemove", (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-  const render = () => {
-    rx += (mx - rx) * 0.18;
-    ry += (my - ry) * 0.18;
-    ring.style.transform = `translate(${rx.toFixed(1)}px, ${ry.toFixed(1)}px)`;
-    requestAnimationFrame(render);
-  };
-  requestAnimationFrame(render);
-  const active = "a, button, summary, [data-magnet], .phone-frame, .service-item summary";
-  document.querySelectorAll(active).forEach((el) => {
-    el.addEventListener("mouseenter", () => ring.classList.add("active"));
-    el.addEventListener("mouseleave", () => ring.classList.remove("active"));
-  });
-  document.addEventListener("mouseleave", () => (ring.style.opacity = "0"));
-  document.addEventListener("mouseenter", () => (ring.style.opacity = "1"));
 }
 
 // ---- 固定ナビ：スクロールで背景付与 ----
