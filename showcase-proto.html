@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!-- _AI_ 実験台：relume風 流れるショーケース試作 v2（2026-07-08）横流し・ホバー拡大＆他を暗く・ダミー素材 -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showcase Proto — RUKA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f2f2;
+    --ink:#141414;
+    --sub:#767676;
+    --card:#ffffff;
+    --accent:#ff5a1f;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font-en:"Hanken Grotesk",system-ui,sans-serif;
+    --font-jp:"Noto Sans JP",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--font-en);-webkit-font-smoothing:antialiased;}
+  body{overflow-x:hidden;}
+
+  /* ===== セクション枠：左右端だけクリップ＆フェード（拡大は縦に逃がす） ===== */
+  .showcase{
+    position:relative;
+    height:100vh;
+    min-height:620px;
+    width:100%;
+    overflow:hidden;                 /* 横マーキーの端を切る */
+    display:flex;
+    flex-direction:column;
+    justify-content:center;          /* 上下に余白＝拡大しても切れない */
+    gap:26px;
+    padding-block:64px;
+    -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image:linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+
+  /* ===== 行（横に流れるトラック） ===== */
+  .row{ width:100%; overflow:visible; }   /* ← 行はクリップしない＝拡大カードが切れない */
+  .row-track{
+    display:flex;
+    gap:26px;
+    width:max-content;
+    will-change:transform;
+    animation:flowLeft var(--dur,50s) linear infinite;
+  }
+  .row:nth-child(even) .row-track{ animation-name:flowRight; }
+  .row:nth-child(1) .row-track{ --dur:52s; }
+  .row:nth-child(2) .row-track{ --dur:64s; }
+  .row:nth-child(3) .row-track{ --dur:46s; }
+
+  /* 中身を2セット並べて -50% で継ぎ目なし無限ループ */
+  @keyframes flowLeft{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @keyframes flowRight{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
+
+  /* ホバー中は流れを止めて触れるように */
+  .showcase:hover .row-track{ animation-play-state:paused; }
+
+  /* ===== カード ===== */
+  .card{
+    position:relative;
+    flex:0 0 auto;
+    width:clamp(240px, 21vw, 320px);
+    aspect-ratio:16/10;
+    border-radius:14px;
+    overflow:hidden;
+    background:var(--card);
+    box-shadow:0 1px 2px rgba(0,0,0,.05), 0 10px 26px rgba(0,0,0,.07);
+    cursor:pointer;
+    transition:transform .5s var(--ease), box-shadow .5s var(--ease), opacity .45s var(--ease), filter .45s var(--ease);
+  }
+  .card .thumb{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:16px; }
+  .card .thumb::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 42%, rgba(0,0,0,.30)); }
+  .card .label{ position:relative; z-index:1; color:#fff; }
+  .card .label .k{ font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; opacity:.85; font-weight:600; }
+  .card .label .t{ font-size:16px; font-weight:700; margin-top:2px; }
+
+  /* ③ ホバー以外は暗く＋少し縮む　② ホバーしたやつだけ拡大（切れない） */
+  .showcase:has(.card:hover) .card{ opacity:.42; filter:brightness(.62) saturate(.92); transform:scale(.985); }
+  .showcase .card:hover{
+    opacity:1 !important; filter:none !important;
+    transform:scale(1.14) !important;
+    z-index:20;
+    box-shadow:0 10px 22px rgba(0,0,0,.14), 0 30px 60px rgba(0,0,0,.22);
+  }
+
+  /* ===== ④ 中央ピル：作り直し（フロスト・ミニマル・単行） ===== */
+  .badge{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    z-index:30;
+    display:inline-flex; align-items:center; gap:14px;
+    padding:14px 14px 14px 22px;
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(14px) saturate(1.2);
+    -webkit-backdrop-filter:blur(14px) saturate(1.2);
+    border:1px solid rgba(20,20,20,.08);
+    border-radius:999px;
+    box-shadow:0 8px 30px rgba(0,0,0,.10);
+    text-decoration:none; color:var(--ink);
+    animation:float 6s ease-in-out infinite;
+    transition:box-shadow .4s var(--ease);
+  }
+  .badge:hover{ box-shadow:0 12px 40px rgba(0,0,0,.16); }
+  @keyframes float{ 0%,100%{ transform:translate(-50%,-53%);} 50%{ transform:translate(-50%,-47%);} }
+  .badge .live{ position:relative; width:7px; height:7px; border-radius:50%; background:var(--accent); }
+  .badge .live::after{ content:""; position:absolute; inset:-4px; border-radius:50%; border:1px solid var(--accent); opacity:.5; animation:ping 2s ease-out infinite; }
+  @keyframes ping{ 0%{ transform:scale(.6); opacity:.6;} 100%{ transform:scale(1.8); opacity:0;} }
+  .badge .lead{ font-size:14px; font-weight:600; letter-spacing:.01em; }
+  .badge .n{ font-variant-numeric:tabular-nums; font-weight:800; }
+  .badge .go{
+    display:grid; place-items:center; width:34px; height:34px; border-radius:50%;
+    background:var(--ink); color:#fff; font-size:15px;
+    transition:transform .4s var(--ease);
+  }
+  .badge:hover .go{ transform:translateX(3px); }
+
+  /* 左上ラベル */
+  .tag{ position:absolute; top:26px; left:28px; z-index:30; font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--sub); }
+  .tag .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-right:8px; vertical-align:middle; }
+
+  @media (max-width:640px){
+    .card{ width:64vw; }
+    .badge .lead{ font-size:12.5px; } .badge{ padding:11px 11px 11px 18px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .row-track, .badge, .badge .live::after{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<section class="showcase" id="showcase">
+  <div class="tag"><span class="dot"></span>Selected Work</div>
+
+  <!-- 3行はJSで生成 -->
+
+  <a class="badge" href="#">
+    <span class="live"></span>
+    <span class="lead"><span class="n" id="count">16</span> projects, shipped with AI</span>
+    <span class="go">→</span>
+  </a>
+</section>
+
+<script>
+  // ====== ダミー素材（果てし果て）：本番は実制作サイトのスクショ＆URLに差し替え ======
+  const SITES = [
+    { t:"SaaS Landing", k:"Web / LP",   g:"linear-gradient(135deg,#6a5cff,#b06bff)" },
+    { t:"EC Store",     k:"Shopify",    g:"linear-gradient(135deg,#111,#3a3a3a)" },
+    { t:"Coach Site",   k:"Personal",   g:"linear-gradient(135deg,#ff8a3d,#ff5a1f)" },
+    { t:"Portfolio",    k:"Creative",   g:"linear-gradient(135deg,#0f766e,#22d3aa)" },
+    { t:"Recruit LP",   k:"Hiring",     g:"linear-gradient(135deg,#1e3a8a,#3b82f6)" },
+    { t:"Cafe Brand",   k:"Local",      g:"linear-gradient(135deg,#7c2d12,#c2703c)" },
+    { t:"AI Tool",      k:"Product",    g:"linear-gradient(135deg,#111827,#4f46e5)" },
+    { t:"Media Blog",   k:"Content",    g:"linear-gradient(135deg,#be123c,#fb7185)" },
+    { t:"Real Estate",  k:"Corporate",  g:"linear-gradient(135deg,#334155,#94a3b8)" },
+    { t:"Fitness App",  k:"Mobile",     g:"linear-gradient(135deg,#166534,#4ade80)" },
+    { t:"Event Page",   k:"Campaign",   g:"linear-gradient(135deg,#9333ea,#e879f9)" },
+    { t:"Newsletter",   k:"Email",      g:"linear-gradient(135deg,#0369a1,#38bdf8)" },
+    { t:"Agency Site",  k:"Studio",     g:"linear-gradient(135deg,#0a0a0a,#525252)" },
+    { t:"Course LP",    k:"Education",  g:"linear-gradient(135deg,#b45309,#fbbf24)" },
+    { t:"Community",    k:"Membership", g:"linear-gradient(135deg,#4338ca,#818cf8)" },
+    { t:"Restaurant",   k:"F&B",        g:"linear-gradient(135deg,#7f1d1d,#ef4444)" },
+  ];
+
+  const ROWS = 3;
+  const showcase = document.getElementById("showcase");
+  const badge = showcase.querySelector(".badge");
+
+  function cardHTML(s){
+    return `<article class="card">
+      <div class="thumb" style="background:${s.g}">
+        <div class="label"><div class="k">${s.k}</div><div class="t">${s.t}</div></div>
+      </div>
+    </article>`;
+  }
+
+  // 各行に振り分け → トラックは中身を2回並べて継ぎ目なしループ
+  for(let r=0;r<ROWS;r++){
+    const items = SITES.filter((_,i)=> i % ROWS === r);
+    const inner = items.map(cardHTML).join("");
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `<div class="row-track">${inner}${inner}</div>`;
+    showcase.insertBefore(row, badge);   // badgeより前に差し込む
+  }
+
+  document.getElementById("count").textContent = SITES.length;
+</script>
+</body>
+</html>

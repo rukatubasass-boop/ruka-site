@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- _AI_ 実験台：relume風「左UIモック＋協働カーソル / 右テキスト」セクション試作（2026-07-08）ダミー文言 -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section Proto — RUKA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f2f2; --ink:#141414; --sub:#6b6b6b; --line:#e2e2e2;
+    --panel:#ececeb; --card:#fff; --accent:#ff5a1f;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font-en:"Hanken Grotesk",system-ui,sans-serif;
+    --font-jp:"Noto Sans JP",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--font-en);-webkit-font-smoothing:antialiased;}
+  body{overflow-x:hidden;}
+  .spacer{height:60vh; display:grid; place-items:center; color:var(--sub); font-size:13px; letter-spacing:.2em; text-transform:uppercase;}
+
+  .section{
+    max-width:1240px; margin:0 auto; padding:120px 40px;
+    display:grid; grid-template-columns:1.05fr .95fr; gap:72px; align-items:center;
+  }
+
+  /* ===== 左：プロダクトUIモック ===== */
+  .mock{
+    position:relative; border-radius:20px; background:var(--panel);
+    border:1px solid var(--line); padding:18px; aspect-ratio:5/4; overflow:hidden;
+    box-shadow:0 2px 4px rgba(0,0,0,.03), 0 30px 60px rgba(0,0,0,.08);
+  }
+  .mock-bar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .tabs{ display:flex; gap:4px; background:#e2e2e0; padding:4px; border-radius:10px; }
+  .tabs span{ font-size:12px; font-weight:600; color:var(--sub); padding:5px 12px; border-radius:7px; }
+  .tabs span.active{ background:#fff; color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.08); }
+  .bar-right{ display:flex; align-items:center; gap:10px; }
+  .avatars{ display:flex; }
+  .avatars i{ width:24px; height:24px; border-radius:50%; border:2px solid var(--panel); margin-left:-8px; display:block; }
+  .avatars i:nth-child(1){ background:#f5b642; margin-left:0; }
+  .avatars i:nth-child(2){ background:#4f86f7; }
+  .btn{ font-size:12px; font-weight:600; padding:6px 12px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); }
+  .btn.dark{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  /* ワイヤーフレーム3面 */
+  .frames{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; height:calc(100% - 52px); }
+  .frame{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:8px; }
+  .frame.sel{ border-color:#8b7bff; box-shadow:0 0 0 2px rgba(139,123,255,.25); }
+  .blk{ background:#ededed; border-radius:5px; }
+  .blk.h{ height:26px; } .blk.m{ height:14px; width:70%; } .blk.s{ height:10px; width:45%; }
+  .blk.box{ flex:1; min-height:40px; } .blk.row{ height:34px; }
+  .frame-cap{ font-size:10px; font-weight:600; color:var(--sub); display:flex; align-items:center; gap:5px; }
+  .frame-cap b{ width:12px; height:12px; border-radius:3px; background:#d9d5ff; display:inline-block; }
+
+  /* ===== 漂う協働カーソル ===== */
+  .cursor{ position:absolute; top:0; left:0; z-index:5; display:flex; align-items:flex-start; gap:0; pointer-events:none; will-change:transform; }
+  .cursor svg{ width:20px; height:20px; filter:drop-shadow(0 1px 1px rgba(0,0,0,.2)); }
+  .cursor .tag{ font-size:11px; font-weight:700; color:#fff; padding:2px 8px; border-radius:8px 8px 8px 2px; margin-top:12px; margin-left:-2px; white-space:nowrap; }
+  .c-jessica{ animation:driftA 11s var(--ease) infinite; }
+  .c-jessica .tag{ background:#f5b642; } .c-jessica svg path{ fill:#f5b642; }
+  .c-guest{ animation:driftB 13s var(--ease) infinite; }
+  .c-guest .tag{ background:#2fbf6b; } .c-guest svg path{ fill:#2fbf6b; }
+  .c-mario{ animation:driftC 15s var(--ease) infinite; }
+  .c-mario .tag{ background:#4f86f7; } .c-mario svg path{ fill:#4f86f7; }
+
+  @keyframes driftA{ 0%{transform:translate(40px,60px);} 25%{transform:translate(150px,120px);} 55%{transform:translate(90px,220px);} 80%{transform:translate(200px,170px);} 100%{transform:translate(40px,60px);} }
+  @keyframes driftB{ 0%{transform:translate(260px,90px);} 30%{transform:translate(180px,200px);} 60%{transform:translate(300px,250px);} 100%{transform:translate(260px,90px);} }
+  @keyframes driftC{ 0%{transform:translate(150px,260px);} 35%{transform:translate(70px,140px);} 70%{transform:translate(230px,80px);} 100%{transform:translate(150px,260px);} }
+
+  /* ===== 右：テキスト ===== */
+  .copy{ max-width:480px; }
+  .eyebrow{ font-size:12px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:20px; }
+  .copy h2{ font-size:clamp(34px,4vw,52px); line-height:1.05; letter-spacing:-.02em; font-weight:800; margin-bottom:22px; }
+  .copy p{ font-family:var(--font-jp); font-size:16px; line-height:1.9; color:#333; margin-bottom:40px; }
+  .feats{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .feat .ico{ width:40px; height:40px; border-radius:11px; background:#fff; border:1px solid var(--line); display:grid; place-items:center; font-size:18px; margin-bottom:14px; }
+  .feat h3{ font-size:16px; font-weight:700; margin-bottom:7px; }
+  .feat p{ font-size:13.5px; line-height:1.75; margin:0; color:var(--sub); }
+
+  /* ===== スクロール登場 ===== */
+  [data-in]{ opacity:0; transform:translateY(30px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+  [data-in].in{ opacity:1; transform:none; }
+  [data-in].d1{ transition-delay:.08s; } [data-in].d2{ transition-delay:.16s; } [data-in].d3{ transition-delay:.24s; }
+
+  @media (max-width:900px){
+    .section{ grid-template-columns:1fr; gap:44px; padding:80px 24px; }
+    .feats{ gap:20px; }
+  }
+  @media (prefers-reduced-motion:reduce){ .cursor{ animation:none; } [data-in]{ opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+<div class="spacer">Scroll ↓</div>
+
+<section class="section">
+  <!-- 左：UIモック -->
+  <div class="mock" data-in>
+    <div class="mock-bar">
+      <div class="tabs"><span>Sitemap</span><span class="active">Wireframe</span><span>Style&nbsp;Guide</span></div>
+      <div class="bar-right">
+        <div class="avatars"><i></i><i></i></div>
+        <span class="btn">Share</span><span class="btn dark">Export</span>
+      </div>
+    </div>
+    <div class="frames">
+      <div class="frame">
+        <div class="frame-cap"><b></b>Home</div>
+        <div class="blk h"></div><div class="blk m"></div><div class="blk box"></div><div class="blk row"></div>
+      </div>
+      <div class="frame sel">
+        <div class="frame-cap"><b></b>About</div>
+        <div class="blk h"></div><div class="blk s"></div><div class="blk box"></div><div class="blk m"></div>
+      </div>
+      <div class="frame">
+        <div class="frame-cap"><b></b>Pricing</div>
+        <div class="blk h"></div><div class="blk box"></div><div class="blk row"></div><div class="blk s"></div>
+      </div>
+    </div>
+
+    <!-- 漂うカーソル -->
+    <div class="cursor c-jessica"><svg viewBox="0 0 24 24"><path d="M4 2l16 7-6 2-2 6z"/></svg><span class="tag">Jessica</span></div>
+    <div class="cursor c-guest"><svg viewBox="0 0 24 24"><path d="M4 2l16 7-6 2-2 6z"/></svg><span class="tag">Guest</span></div>
+    <div class="cursor c-mario"><svg viewBox="0 0 24 24"><path d="M4 2l16 7-6 2-2 6z"/></svg><span class="tag">Mario</span></div>
+  </div>
+
+  <!-- 右：テキスト（※ダミー文言・後で差し替え） -->
+  <div class="copy">
+    <div class="eyebrow" data-in>How it works</div>
+    <h2 data-in class="d1">アイデアから<br>公開まで、最短で。</h2>
+    <p data-in class="d1">頭の中の構想を、その日のうちに動くサイトへ。作る過程をぜんぶ見せながら、AIと一緒に形にしていく。テンプレのコピペじゃない、あなた専用の1枚を。</p>
+    <div class="feats">
+      <div class="feat" data-in>
+        <div class="ico">✏️</div>
+        <h3>思いついたら即カタチ</h3>
+        <p>ラフな言葉から下書きを生成。手を動かす前に方向性が見える。</p>
+      </div>
+      <div class="feat d1" data-in>
+        <div class="ico">✨</div>
+        <h3>テンプレ臭ゼロ</h3>
+        <p>既製の型に押し込まない。素材と目的から毎回組み上げる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="spacer">End</div>
+
+<script>
+  // スクロールで登場（IntersectionObserver）
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold:.2 });
+  document.querySelectorAll("[data-in]").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

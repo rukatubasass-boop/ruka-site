@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- _AI_ 実験台：relume風「3カード＋ツリー線」セクション試作（2026-07-08）ダミー文言 -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards Proto — RUKA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f2f2; --ink:#141414; --sub:#6b6b6b; --line:#d7d7d7; --card:#fff;
+    --accent:#ff5a1f; --wire:#8b7bff;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --font-en:"Hanken Grotesk",system-ui,sans-serif;
+    --font-jp:"Noto Sans JP",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);font-family:var(--font-en);-webkit-font-smoothing:antialiased;}
+  body{overflow-x:hidden;}
+  .spacer{height:55vh; display:grid; place-items:center; color:var(--sub); font-size:13px; letter-spacing:.2em; text-transform:uppercase;}
+
+  .cards{ max-width:1240px; margin:0 auto; padding:40px 40px 130px; position:relative; }
+
+  /* ===== ツリー線（CSSライン＋scaleで描画） ===== */
+  .tree{ position:relative; height:88px; }
+  .tree .ln{ position:absolute; background:var(--line); }
+  .trunk{ top:0; left:50%; width:2px; height:44px; transform:translateX(-50%) scaleY(0); transform-origin:top center;
+          transition:transform .5s var(--ease); }
+  .branch{ top:44px; left:16%; right:16%; height:2px; transform:scaleX(0); transform-origin:center;
+           transition:transform .7s var(--ease) .35s; }
+  .drop{ top:44px; width:2px; height:44px; transform:scaleY(0); transform-origin:top center; }
+  .drop.d1{ left:16%; transition:transform .4s var(--ease) .95s; }
+  .drop.d2{ left:50%; transform:translateX(-50%) scaleY(0); transition:transform .4s var(--ease) 1.05s; }
+  .drop.d3{ left:84%; transition:transform .4s var(--ease) 1.15s; }
+
+  .cards.in .trunk{ transform:translateX(-50%) scaleY(1); }
+  .cards.in .branch{ transform:scaleX(1); }
+  .cards.in .drop.d1{ transform:scaleY(1); }
+  .cards.in .drop.d2{ transform:translateX(-50%) scaleY(1); }
+  .cards.in .drop.d3{ transform:scaleY(1); }
+
+  /* ===== 3カード ===== */
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .ccard{
+    background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 28px 28px;
+    display:flex; flex-direction:column; box-shadow:0 2px 4px rgba(0,0,0,.03), 0 24px 48px rgba(0,0,0,.05);
+    opacity:0; transform:translateY(40px); transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .cards.in .ccard{ opacity:1; transform:none; }
+  /* 線が各カードに届いてから立ち上がる（drop d1〜d3完了後） */
+  .cards.in .ccard:nth-child(1){ transition-delay:1.20s; }
+  .cards.in .ccard:nth-child(2){ transition-delay:1.33s; }
+  .cards.in .ccard:nth-child(3){ transition-delay:1.46s; }
+
+  .eyebrow{ font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:12px; }
+  .ccard h3{ font-size:30px; font-weight:800; letter-spacing:-.01em; margin-bottom:12px; }
+  .ccard .desc{ font-family:var(--font-jp); font-size:14px; line-height:1.85; color:#444; margin-bottom:22px; }
+  .try{ align-self:flex-start; font-size:13px; font-weight:700; padding:10px 20px; border-radius:999px;
+        border:1px solid var(--ink); background:transparent; color:var(--ink); cursor:pointer;
+        transition:background .3s var(--ease), color .3s var(--ease); margin-bottom:26px; }
+  .try:hover{ background:var(--ink); color:#fff; }
+
+  /* ミニプレビュー */
+  .pv{ margin-top:auto; background:#f6f6f6; border:1px solid var(--line); border-radius:12px; padding:14px; height:170px; overflow:hidden; }
+
+  /* サイトマップ・ツリー（カード1） */
+  .sm{ display:flex; flex-direction:column; gap:8px; }
+  .sm .node{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:11px; font-weight:600; display:flex; align-items:center; gap:6px; }
+  .sm .node.root{ border-color:#bcb3ff; }
+  .sm .kids{ margin-left:16px; display:flex; flex-direction:column; gap:6px; border-left:2px solid var(--line); padding-left:10px; }
+  .sm .dot{ width:12px; height:12px; border-radius:3px; background:#e4e0ff; display:inline-block; }
+
+  /* ワイヤーフレーム（カード2） */
+  .wf{ display:flex; flex-direction:column; gap:8px; height:100%; }
+  .wf .bar{ background:#fff; border:1px solid var(--line); border-radius:6px; }
+  .wf .top{ height:22px; display:flex; align-items:center; padding:0 8px; }
+  .wf .top::before{ content:""; width:36px; height:8px; background:#e2e2e2; border-radius:3px; }
+  .wf .hero{ flex:1; background:#fff; border:1px solid var(--line); border-radius:6px; display:flex; }
+  .wf .hero .l{ flex:1; padding:10px; display:flex; flex-direction:column; gap:6px; justify-content:center; }
+  .wf .hero .l i{ height:8px; background:#e6e6e6; border-radius:3px; display:block; }
+  .wf .hero .l i:nth-child(1){ width:80%; } .wf .hero .l i:nth-child(2){ width:55%; }
+  .wf .hero .r{ flex:1; background:#efefef; border-left:1px solid var(--line); border-radius:0 6px 6px 0; }
+
+  /* スタイルガイド（カード3） */
+  .sg{ display:grid; grid-template-columns:1fr 1fr; gap:8px; height:100%; }
+  .sg .swatch{ border-radius:8px; }
+  .sg .s1{ background:linear-gradient(135deg,#7c3aed,#c026d3); grid-row:span 2; }
+  .sg .s2{ background:#111; } .sg .s3{ background:#f5b642; }
+  .sg .s4{ background:linear-gradient(135deg,#f97316,#ef4444); }
+  .sg .type{ background:#fff; border:1px solid var(--line); border-radius:8px; display:grid; place-items:center; font-size:22px; font-weight:800; color:var(--ink); }
+
+  @media (max-width:860px){
+    .grid{ grid-template-columns:1fr; gap:44px; }
+    .tree{ display:none; }   /* 縦積みでは線を隠す */
+    .ccard{ transform:translateY(30px); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .ccard{ opacity:1; transform:none; }
+    .ln{ transform:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="spacer">Scroll ↓</div>
+
+<section class="cards" id="cards">
+  <!-- ツリー線 -->
+  <div class="tree">
+    <div class="ln trunk"></div>
+    <div class="ln branch"></div>
+    <div class="ln drop d1"></div>
+    <div class="ln drop d2"></div>
+    <div class="ln drop d3"></div>
+  </div>
+
+  <div class="grid">
+    <!-- カード1：Plan / Sitemaps -->
+    <article class="ccard">
+      <div class="eyebrow">Plan</div>
+      <h3>Sitemaps</h3>
+      <p class="desc">まずサイト全体の地図を引く。ページ構成をAIで一気に洗い出して、迷わない骨組みを作る。</p>
+      <button class="try">Give it a try</button>
+      <div class="pv">
+        <div class="sm">
+          <div class="node root"><span class="dot"></span>Home</div>
+          <div class="kids">
+            <div class="node"><span class="dot"></span>Navbar</div>
+            <div class="node"><span class="dot"></span>Hero Section</div>
+            <div class="node"><span class="dot"></span>Features</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- カード2：Structure / Wireframes -->
+    <article class="ccard">
+      <div class="eyebrow">Structure</div>
+      <h3>Wireframes</h3>
+      <p class="desc">地図ができたら骨組みへ。装飾を省いた実コンポーネントで、構成と流れをその場で確認。</p>
+      <button class="try">Give it a try</button>
+      <div class="pv">
+        <div class="wf">
+          <div class="bar top"></div>
+          <div class="hero"><div class="l"><i></i><i></i></div><div class="r"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- カード3：Conceptualise / Style Guide -->
+    <article class="ccard">
+      <div class="eyebrow">Conceptualise</div>
+      <h3>Style Guide</h3>
+      <p class="desc">最後に世界観を乗せる。色・フォント・トーンを一括で当てて、全ページに反映する。</p>
+      <button class="try">Give it a try</button>
+      <div class="pv">
+        <div class="sg">
+          <div class="swatch s1"></div>
+          <div class="type">Aa</div>
+          <div class="swatch s3"></div>
+          <div class="swatch s2"></div>
+          <div class="swatch s4"></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="spacer">End</div>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold:.25 });
+  io.observe(document.getElementById("cards"));
+</script>
+</body>
+</html>

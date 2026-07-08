@@ -147,12 +147,25 @@ if (typeof gsap !== "undefined" && !reduceMotion) {
       },
     });
   });
+  // HOW I WORK：セクション入場でツリー線描画＋カード立ち上げ（.is-in でCSSアニメ発火）
+  const hiw = document.querySelector(".how-i-work");
+  if (hiw) {
+    ScrollTrigger.create({
+      trigger: hiw,
+      start: "top 70%",
+      once: true,
+      onEnter: () => hiw.classList.add("is-in"),
+    });
+  }
 } else {
   // GSAPなし・reduced-motion時は全部表示
   document.querySelectorAll("[data-reveal]").forEach((el) => {
     el.style.opacity = 1;
     el.style.transform = "none";
   });
+  // HOW I WORK も静止で可視化（線・カードを即表示）
+  const hiwEl = document.querySelector(".how-i-work");
+  if (hiwEl) hiwEl.classList.add("is-in");
 }
 
 // ---- ローディング（数字カウンター）→ 完了でHERO演出発火 ----
@@ -266,3 +279,35 @@ if (menuOverlay && menuBtn && menuClose) {
     if (e.key === "Escape") setMenu(false);
   });
 }
+
+// ---- CLIENT WORK：制作実績ギャラリー生成（client-work-data.js の配列を読む） ----
+(function buildClientWork() {
+  const wall = document.getElementById("cw-wall");
+  if (!wall) return;
+  const works = Array.isArray(window.CLIENT_WORKS) ? window.CLIENT_WORKS : [];
+  const ROWS = 3;
+  const PLACEHOLDERS = 6; // 実績0件のとき各行に流す仮枠の総数
+  const source = works.length ? works : Array.from({ length: PLACEHOLDERS }, () => null);
+
+  const cardHTML = (w) =>
+    w
+      ? `<article class="cw-card"><a class="cw-thumb" href="${w.url || "#"}" style="background-image:url('${w.thumb || ""}')"><span class="cw-label"><span class="cw-k">${w.kind || ""}</span><span class="cw-t">${w.title || ""}</span></span></a></article>`
+      : `<article class="cw-card is-placeholder"><span class="cw-ph">Coming soon</span></article>`;
+
+  for (let r = 0; r < ROWS; r++) {
+    const items = source.filter((_, i) => i % ROWS === r);
+    const inner = items.map(cardHTML).join("");
+    const row = document.createElement("div");
+    row.className = "cw-row";
+    // 中身を2セット並べて -50% で継ぎ目なし無限ループ
+    row.innerHTML = `<div class="cw-row-track">${inner}${inner}</div>`;
+    wall.appendChild(row);
+  }
+
+  // honest count：実データ件数（0なら0のまま）
+  const countEl = document.getElementById("cw-count");
+  if (countEl) countEl.textContent = works.length;
+  // 0件のときはピル文言を「制作受付中」に寄せる（0という数字を不自然に見せない）
+  const lead = document.querySelector(".cw-badge .cw-lead");
+  if (lead && works.length === 0) lead.textContent = "制作受付中 · 第1号募集";
+})();
