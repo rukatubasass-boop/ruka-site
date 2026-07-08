@@ -56,7 +56,6 @@ if (typeof gsap !== "undefined" && !reduceMotion) {
   // ---- 初回ロード演出：HEROの登場シーケンス（即発火） ----
   const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
   intro
-    .from(".hero-kicker", { y: 22, opacity: 0, duration: 0.6 }, 0.15)
     .from(".hero-title .ch", { yPercent: 130, duration: 0.85, stagger: 0.04, ease: "power4.out" }, 0.2)
     .from(".hero-desc", { y: 24, opacity: 0, duration: 0.7 }, "-=0.45")
     .from(".hero-actions", { y: 24, opacity: 0, duration: 0.7 }, "-=0.5")
@@ -157,18 +156,9 @@ if (typeof gsap !== "undefined" && !reduceMotion) {
 }
 
 // ---- ローディング（数字カウンター）→ 完了でHERO演出発火 ----
-// ---- Lenis スムーススクロール（exoape式・ぬるっと） ----
+// ---- スクロールはブラウザ標準（Lenisスムーススクロールは重いので廃止・2026-07-08） ----
+// 視差(scrub)アニメはScrollTriggerが標準スクロールで動く。lenisはnull固定でナビはscrollIntoViewにフォールバック
 let lenis = null;
-if (typeof Lenis !== "undefined" && !reduceMotion) {
-  lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-  const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-  requestAnimationFrame(raf);
-  if (typeof ScrollTrigger !== "undefined") {
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((t) => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  }
-}
 
 // ---- ナビ内リンク：画面フェード切替（14islands式） ----
 (function fadeNav() {

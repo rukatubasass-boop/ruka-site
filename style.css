@@ -148,8 +148,8 @@ a { color: inherit; text-decoration: none; }
 /* カテゴリ：左→右にキラッと光るシマー（14islands式） */
 .nav-links a:not(.nav-cta) {
   font-family: var(--font-en);
-  font-weight: 700;
-  font-size: 12px;
+  font-weight: 550;
+  font-size: 10.5px;
   letter-spacing: .18em;
   background-image: linear-gradient(105deg, var(--ink) 0 42%, #c9c9c9 50%, var(--ink) 58% 100%);
   background-size: 260% 100%;
