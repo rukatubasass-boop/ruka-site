@@ -11,6 +11,12 @@
   --font: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
   --font-en: "Space Grotesk", "Zen Kaku Gothic New", sans-serif;
   --stripe: none;        /* 斜め線は撤去＝フラットな上質面に */
+  /* ---- デザイントークン（品質パス2026-07-08） ---- */
+  --gutter: clamp(22px, 5vw, 84px);        /* 横マージン統一（nav↔section整列） */
+  --ease-out: cubic-bezier(.22, .61, .36, 1); /* 上質なease-out */
+  --dur: .22s;                              /* 標準トランジション時間 */
+  --shadow-card: 0 18px 40px -26px rgba(23,20,15,.42);
+  --shadow-float: 0 30px 60px -30px rgba(23,20,15,.5);
 }
 
 ::selection { background: var(--orange); color: var(--paper-2); }
@@ -19,6 +25,7 @@
 ::-webkit-scrollbar-thumb { background: var(--ink); border: 2px solid var(--paper); }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 1px; }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font);
@@ -36,7 +43,7 @@ a { color: inherit; text-decoration: none; }
   display: inline-block;
   font-weight: 900; font-size: 15px; letter-spacing: .02em;
   padding: 14px 30px;
-  transition: translate .18s ease, background .18s ease, color .18s ease;
+  transition: translate var(--dur) var(--ease-out), background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 .btn-primary { background: var(--ink); color: var(--paper); }
 .btn-primary:hover { translate: 0 -3px; }
@@ -63,7 +70,7 @@ a { color: inherit; text-decoration: none; }
   min-height: 100svh;
   background: var(--paper);
   background-image: var(--stripe);
-  padding: 28px clamp(20px, 5vw, 72px);
+  padding: 28px var(--gutter);
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
@@ -114,13 +121,13 @@ a { color: inherit; text-decoration: none; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 50;
-  padding: 22px clamp(20px, 5vw, 72px);
+  padding: 22px var(--gutter);
   display: flex; justify-content: space-between; align-items: center;
   gap: 20px;
-  transition: padding .25s ease, background .25s ease, box-shadow .25s ease;
+  transition: padding var(--dur) var(--ease-out), background var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
 .site-nav.scrolled {
-  padding: 12px clamp(20px, 5vw, 72px);
+  padding: 12px var(--gutter);
   background: rgba(246, 244, 239, .9);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -135,7 +142,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .18em;
   background: linear-gradient(var(--orange), var(--orange)) no-repeat 0 100% / 0 2px;
   padding-bottom: 3px;
-  transition: background-size .25s ease, color .2s;
+  transition: background-size var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 .nav-links a:hover { color: var(--orange); background-size: 100% 2px; }
 .nav-right { display: flex; align-items: center; gap: 12px; }
@@ -143,7 +150,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 900; font-size: 13px; letter-spacing: .06em;
   border: 2px solid var(--ink); border-radius: 999px;
   padding: 7px 20px;
-  transition: background .2s, color .2s;
+  transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 .nav-x:hover { background: var(--ink); color: var(--paper); }
 .nav-menu-btn {
@@ -157,7 +164,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
   color: var(--ink);
   cursor: pointer;
-  transition: background .2s, color .2s;
+  transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 .nav-menu-btn:hover { background: var(--ink); color: var(--paper); }
 
@@ -179,7 +186,7 @@ a { color: inherit; text-decoration: none; }
 .menu-overlay.open { opacity: 1; visibility: visible; }
 .menu-close {
   position: absolute;
-  top: 22px; right: clamp(20px, 5vw, 72px);
+  top: 22px; right: var(--gutter);
   width: 44px; height: 44px;
   border: 2px solid rgba(244,241,234,.5);
   border-radius: 999px;
@@ -227,7 +234,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 2;
 }
 
-.hero-main { position: relative; z-index: 2; padding-left: clamp(28px, 4vw, 64px); }
+.hero-main { position: relative; z-index: 2; padding-left: clamp(0px, 1.5vw, 18px); }
 .hero-kicker {
   font-family: var(--font-en);
   font-weight: 700; font-size: 13px; letter-spacing: .28em;
@@ -337,7 +344,7 @@ a { color: inherit; text-decoration: none; }
 }
 .scroll-badge svg {
   width: 100%; height: 100%;
-  animation: badge-spin 14s linear infinite;
+  animation: badge-spin 16s linear infinite;
 }
 .scroll-badge text {
   font-family: var(--font-en);
@@ -382,7 +389,7 @@ section[data-num]::before {
 section[data-num] > * { position: relative; z-index: 1; }
 
 /* ---------- 共通セクション ---------- */
-section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
+section { padding: clamp(84px, 12vw, 150px) var(--gutter); }
 .section-head { margin-bottom: clamp(40px, 5vw, 68px); max-width: 760px; }
 .section-label {
   font-family: var(--font-en);
@@ -459,7 +466,7 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
 
 .terminal-frame {
   background: #1c1913;
-  box-shadow: 0 30px 60px -30px rgba(23,20,15,.55);
+  box-shadow: var(--shadow-float);
 }
 .terminal-body { padding: 20px 18px 24px; display: grid; gap: 14px; }
 .terminal-body p {
@@ -487,13 +494,13 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
   border: 8px solid #1c1913;
   border-radius: 26px;
   overflow: hidden;
-  box-shadow: 0 30px 60px -28px rgba(23,20,15,.55);
+  box-shadow: var(--shadow-float);
 }
 .phone-frame img, .phone-frame video { width: 100%; display: block; cursor: pointer; }
 
 .browser-frame {
   background: #1c1913;
-  box-shadow: 0 30px 60px -30px rgba(23,20,15,.55);
+  box-shadow: var(--shadow-float);
 }
 .browser-frame img { width: 100%; border-top: none; }
 
@@ -556,9 +563,13 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
   padding: 32px 28px;
   display: flex; flex-direction: column;
 }
+.price-card {
+  transition: translate var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+.price-card:hover { translate: 0 -4px; border-color: var(--ink); box-shadow: var(--shadow-card); }
 .price-card.featured {
   border-top-color: var(--orange);
-  box-shadow: 0 22px 46px -28px rgba(23,20,15,.45);
+  box-shadow: var(--shadow-card);
 }
 .price-tier { font-weight: 900; font-size: 12px; letter-spacing: .3em; color: var(--muted); margin-bottom: 16px; }
 .price-card h3 { font-weight: 900; font-size: 20px; margin-bottom: 10px; }
@@ -571,7 +582,7 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
   background: var(--ink); color: var(--paper);
   font-weight: 900; font-size: 16px; letter-spacing: .02em;
   padding: 16px 40px;
-  transition: translate .18s ease;
+  transition: translate var(--dur) var(--ease-out);
 }
 .service-cta:hover { translate: 0 -3px; }
 
@@ -672,7 +683,7 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
 
 /* ---------- 過程ログ ティッカー ---------- */
 .log-ticker {
-  margin: calc(-1 * clamp(80px, 12vw, 150px)) calc(-1 * clamp(20px, 6vw, 100px)) clamp(48px, 6vw, 72px);
+  margin: calc(-1 * clamp(84px, 12vw, 150px)) calc(-1 * var(--gutter)) clamp(48px, 6vw, 72px);
   border-bottom: 1px solid rgba(244, 241, 234, .2);
   padding: 13px 0;
   overflow: hidden;
@@ -751,7 +762,9 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  transition: border-color var(--dur) var(--ease-out), translate var(--dur) var(--ease-out);
 }
+.offer-card.free:hover { border-color: rgba(244,241,234,.55); translate: 0 -4px; }
 .offer-card.paid {
   background: var(--orange);
   color: var(--navy);
@@ -796,7 +809,7 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
   margin-top: auto;
   font-weight: 900; font-size: 15px;
   padding: 14px 28px;
-  transition: translate .18s ease, background .18s, color .18s;
+  transition: translate var(--dur) var(--ease-out), background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 .offer-btn .soon { font-weight: 500; font-size: 11px; opacity: .7; margin-left: 4px; }
 .offer-btn.ghost { border: 2px solid rgba(244,241,234,.6); color: var(--paper); }
@@ -815,30 +828,12 @@ section { padding: clamp(80px, 12vw, 150px) clamp(20px, 6vw, 100px); }
 }
 .nav-links a.nav-cta:hover { background: var(--ink); color: var(--paper); }
 
-/* ---------- NOTE CTA（暗いバンド） ---------- */
-.cta {
-  background: var(--navy);
-  color: var(--paper);
-  text-align: center;
-}
-.cta h2 { font-weight: 900; font-size: clamp(30px, 4.4vw, 56px); line-height: 1.3; letter-spacing: -.01em; }
-.cta p { margin-top: 16px; font-weight: 500; color: rgba(244,241,234,.75); }
-.cta-btn {
-  display: inline-block;
-  margin-top: 32px;
-  background: var(--paper); color: var(--ink);
-  font-weight: 900; font-size: 17px; letter-spacing: .02em;
-  padding: 16px 44px;
-  transition: translate .18s ease;
-}
-.cta-btn:hover { translate: 0 -3px; }
-
 /* ---------- FOOTER ---------- */
 .footer {
   position: relative;
   overflow: hidden;
   background: var(--ink); color: var(--paper);
-  padding: clamp(64px, 8vw, 110px) clamp(20px, 6vw, 100px) 40px;
+  padding: clamp(64px, 8vw, 110px) var(--gutter) 40px;
 }
 .footer-giant {
   font-family: var(--font-en);
