@@ -1,14 +1,17 @@
-/* ============ RUKA portfolio — editorial paper × ink, orange as accent ============ */
+/* ============ RUKA portfolio — Claude-cream editorial（warm canvas × serif display × terracotta）============ */
 :root {
-  --paper: #f2f2f2;      /* 14islands準拠のニュートラル薄グレー */
-  --paper-2: #fafafa;    /* 明るい面・代替セクション */
-  --panel: #ffffff;      /* カード */
-  --ink: #111111;        /* ニュートラル near-black */
-  --muted: #6a6a6a;      /* 副次テキスト（ニュートラル） */
-  --line: #e0e0e0;       /* 細罫線（ニュートラル） */
-  --navy: #1f2a4e;       /* 暗いセクション・アクセント */
-  --orange: #df5f1b;     /* アクセント（少量のみ） */
+  --paper: #faf9f5;      /* Claude cream canvas（温かい生成り地） */
+  --paper-2: #f5f0e8;    /* surface-soft：明るい面・代替セクション */
+  --panel: #ffffff;      /* カード（クリーム上で白は浮きすぎず上質） */
+  --ink: #141413;        /* Claude ink：見出し・強調 */
+  --body: #3d3d3a;       /* Claude body：本文（旧mutedより濃く可読性UP） */
+  --muted: #6c6a64;      /* Claude muted：副次テキスト（温かいグレー） */
+  --line: #e6dfd8;       /* Claude hairline：温かい細罫線 */
+  --navy: #1f1e1b;       /* Claude surface-dark：暗いセクション（青みを消し温black化） */
+  --orange: #cc785c;     /* Claude terracotta：アクセント（少量のみ） */
+  --orange-active: #a9583e; /* アクセントの押下・ホバー濃色 */
   --font: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-serif: "Zen Old Mincho", "Yu Mincho", "YuMincho", serif; /* 表示体＝Claudeのセリフ役をJP明朝で */
   --font-en: "Hanken Grotesk", "Zen Kaku Gothic New", sans-serif;
   --stripe: none;        /* 斜め線は撤去＝フラットな上質面に */
   /* ---- デザイントークン（品質パス2026-07-08） ---- */
@@ -258,10 +261,11 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 20px;
 }
 .hero-title {
-  font-weight: 900;
+  font-family: var(--font-serif);   /* Claude寄せ：表示体をセリフ（明朝）に */
+  font-weight: 700;
   font-size: clamp(46px, 7.6vw, 108px);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
 }
 .hero-title .line { display: block; }
 .hero-desc {
@@ -406,10 +410,11 @@ section { padding: clamp(84px, 12vw, 150px) var(--gutter); }
   margin-bottom: 14px;
 }
 .section-head h2 {
-  font-weight: 900;
+  font-family: var(--font-serif);   /* Claude寄せ：セクション見出しもセリフで緩急を作る */
+  font-weight: 600;
   font-size: clamp(34px, 4.6vw, 62px);
-  line-height: 1.16;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  letter-spacing: 0;
 }
 .section-note { margin-top: 16px; font-weight: 500; font-size: 15px; color: var(--muted); }
 
