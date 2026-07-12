@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スライド作成代行｜サービス紹介</title>
+<style>
+  :root{
+    --ink:#1a2333;
+    --sub:#5a6678;
+    --accent:#e8590c;
+    --accent-soft:#fff0e6;
+    --bg:#f7f8fa;
+    --card:#ffffff;
+    --line:#e3e7ee;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:#242830;font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;overflow:hidden;}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  .deck{width:1280px;height:720px;position:relative;transform-origin:center center;}
+  .slide{
+    position:absolute;inset:0;background:var(--bg);color:var(--ink);
+    display:none;flex-direction:column;padding:70px 90px;overflow:hidden;
+  }
+  .slide.active{display:flex;}
+  .kicker{
+    font-size:17px;font-weight:700;letter-spacing:.18em;color:var(--accent);
+    margin-bottom:18px;text-transform:uppercase;
+  }
+  h1{font-size:54px;line-height:1.35;font-weight:800;letter-spacing:.01em;}
+  h2{font-size:42px;line-height:1.4;font-weight:800;margin-bottom:14px;}
+  .lead{font-size:22px;color:var(--sub);line-height:1.9;margin-top:22px;}
+  .num{
+    position:absolute;bottom:28px;right:44px;font-size:14px;color:#9aa4b2;
+    font-variant-numeric:tabular-nums;letter-spacing:.1em;
+  }
+  .brand{position:absolute;bottom:28px;left:44px;font-size:13px;color:#9aa4b2;letter-spacing:.08em;}
+  .grow{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  /* cards */
+  .cards{display:flex;gap:26px;margin-top:44px;}
+  .card{
+    flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:34px 30px;box-shadow:0 2px 10px rgba(26,35,51,.05);
+  }
+  .card .icon{
+    width:52px;height:52px;border-radius:12px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px;
+  }
+  .card h3{font-size:23px;font-weight:800;margin-bottom:12px;line-height:1.5;}
+  .card p{font-size:17px;color:var(--sub);line-height:1.85;}
+  /* steps */
+  .steps{display:flex;gap:0;margin-top:48px;align-items:stretch;}
+  .step{flex:1;position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 20px;margin-right:34px;}
+  .step:last-child{margin-right:0;}
+  .step:not(:last-child)::after{
+    content:"›";position:absolute;right:-27px;top:50%;transform:translateY(-50%);
+    font-size:30px;color:#c3cad4;font-weight:700;
+  }
+  .step .no{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:.12em;margin-bottom:10px;}
+  .step h3{font-size:19px;font-weight:800;margin-bottom:8px;}
+  .step p{font-size:14.5px;color:var(--sub);line-height:1.7;}
+  /* cover */
+  .cover{background:linear-gradient(135deg,#1a2333 0%,#243046 100%);color:#fff;justify-content:center;}
+  .cover .kicker{color:#ffb385;}
+  .cover h1{color:#fff;font-size:60px;}
+  .cover .lead{color:#b8c2d0;}
+  .cover .badge{
+    display:inline-block;margin-top:46px;background:rgba(232,89,12,.16);border:1px solid rgba(255,179,133,.45);
+    color:#ffb385;font-size:18px;font-weight:700;padding:14px 28px;border-radius:999px;letter-spacing:.04em;
+  }
+  /* big statement */
+  .statement{justify-content:center;text-align:center;align-items:center;}
+  .statement h2{font-size:50px;}
+  .statement .accent{color:var(--accent);}
+  /* two-col */
+  .cols{display:flex;gap:50px;margin-top:40px;align-items:flex-start;}
+  .cols .col{flex:1;}
+  ul.clean{list-style:none;}
+  ul.clean li{
+    font-size:20px;line-height:1.7;padding:16px 0 16px 40px;position:relative;border-bottom:1px solid var(--line);
+  }
+  ul.clean li::before{
+    content:"✓";position:absolute;left:6px;color:var(--accent);font-weight:800;
+  }
+  /* principle grid */
+  .grid4{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:42px;}
+  .grid4 .cell{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;display:flex;gap:20px;align-items:flex-start;}
+  .grid4 .cell .icon{font-size:26px;background:var(--accent-soft);border-radius:10px;width:48px;height:48px;flex:none;display:flex;align-items:center;justify-content:center;}
+  .grid4 .cell h3{font-size:20px;font-weight:800;margin-bottom:6px;}
+  .grid4 .cell p{font-size:15.5px;color:var(--sub);line-height:1.75;}
+  /* nav */
+  #nav{
+    position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+    display:flex;gap:7px;z-index:10;
+  }
+  #nav .dot{width:9px;height:9px;border-radius:50%;background:#57606d;cursor:pointer;}
+  #nav .dot.on{background:#e8590c;}
+  .hint{position:fixed;top:12px;right:16px;color:#7c8595;font-size:12px;z-index:10;}
+  /* ===== print / PDF ===== */
+  @page{size:1280px 720px;margin:0;}
+  @media print{
+    html,body{overflow:visible;background:#fff;height:auto;}
+    #stage{position:static;display:block;}
+    .deck{width:1280px;height:auto;transform:none !important;}
+    .slide{
+      display:flex !important;position:relative;inset:auto;
+      width:1280px;height:720px;page-break-after:always;break-after:page;
+    }
+    #nav,.hint{display:none !important;}
+  }
+</style>
+</head>
+<body>
+<div id="stage"><div class="deck" id="deck">
+
+  <!-- 1. 表紙 -->
+  <section class="slide cover active">
+    <div class="grow" style="align-items:flex-start;">
+      <div class="kicker">SLIDE DESIGN SERVICE</div>
+      <h1>その資料作成、<br>丸ごとお任せください。</h1>
+      <p class="lead">構成の設計からデザイン、仕上げの検品まで。<br>「伝わるスライド」を一括で制作・納品します。</p>
+      <div class="badge">💡 このスライド自体が、制作サンプルです</div>
+    </div>
+    <div class="num">1 / 11</div>
+  </section>
+
+  <!-- 2. 悩み -->
+  <section class="slide">
+    <div class="kicker">PROBLEM</div>
+    <h2>こんなお悩み、ありませんか？</h2>
+    <div class="grow">
+      <div class="cards">
+        <div class="card">
+          <div class="icon">⏰</div>
+          <h3>資料づくりで<br>半日つぶれる</h3>
+          <p>本業に使うべき時間が、パワポとの格闘に消えていく。終わる頃にはヘトヘトに。</p>
+        </div>
+        <div class="card">
+          <div class="icon">🎨</div>
+          <h3>社内に「作れる人」が<br>いない</h3>
+          <p>内容は固まっているのに、見栄えの整った資料に仕上げられる人がいない。</p>
+        </div>
+        <div class="card">
+          <div class="icon">💸</div>
+          <h3>外注は高くて、<br>直しが遅い</h3>
+          <p>制作会社は見積りが高額。1箇所の修正に数日待たされることも。</p>
+        </div>
+      </div>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">2 / 11</div>
+  </section>
+
+  <!-- 3. 結論 -->
+  <section class="slide statement">
+    <div class="kicker">SOLUTION</div>
+    <h2>「伝わるスライド」を、<span class="accent">速く。</span></h2>
+    <p class="lead">構成設計 → デザイン → 検品まで一括対応。<br>お渡しいただくのは「伝えたい内容」だけで大丈夫です。</p>
+    <div class="brand">スライド作成代行</div><div class="num">3 / 11</div>
+  </section>
+
+  <!-- 4. 特徴1 -->
+  <section class="slide">
+    <div class="kicker">FEATURE 01</div>
+    <h2>初稿までが、速い。</h2>
+    <div class="grow">
+      <p class="lead" style="margin-top:0;">AIを組み込んだ独自の制作フローで、従来の資料制作より大幅に短いリードタイムで初稿をお届けします。<br>お急ぎの登壇・商談にも、まずはご相談ください。</p>
+      <div class="cards" style="margin-top:40px;">
+        <div class="card">
+          <div class="icon">⚡</div>
+          <h3>制作フローを自動化</h3>
+          <p>レイアウト調整や体裁チェックなど「時間を食う単純作業」を自動化し、中身の質に時間を使います。</p>
+        </div>
+        <div class="card">
+          <div class="icon">📅</div>
+          <h3>納期は事前に確約</h3>
+          <p>ヒアリング時にスケジュールを提示し、合意した納期を守ります。進捗も随時ご報告します。</p>
+        </div>
+      </div>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">4 / 11</div>
+  </section>
+
+  <!-- 5. 特徴2 -->
+  <section class="slide">
+    <div class="kicker">FEATURE 02</div>
+    <h2>「1スライド＝1メッセージ」で、伝わる。</h2>
+    <div class="grow">
+      <div class="grid4">
+        <div class="cell"><div class="icon">🎯</div><div><h3>情報を詰め込まない</h3><p>1枚に言いたいことは1つだけ。聞き手が迷わない構成に設計します。</p></div></div>
+        <div class="cell"><div class="icon">📊</div><div><h3>文字より、図解</h3><p>文章の羅列は図・チャートに変換。パッと見て伝わる形にします。</p></div></div>
+        <div class="cell"><div class="icon">🔍</div><div><h3>全枚数を検品</h3><p>文字のはみ出し・崩れ・表記ゆれを全スライドチェックしてから納品します。</p></div></div>
+        <div class="cell"><div class="icon">🧭</div><div><h3>流れから設計</h3><p>いきなり作り始めず、「誰に・何を・どの順で」の構成案からご確認いただきます。</p></div></div>
+      </div>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">5 / 11</div>
+  </section>
+
+  <!-- 6. 特徴3 -->
+  <section class="slide">
+    <div class="kicker">FEATURE 03</div>
+    <h2>修正のやり取りが、軽い。</h2>
+    <div class="grow">
+      <p class="lead" style="margin-top:0;">制作を内製フローで完結させているため、修正サイクルが速いのが強みです。<br>「ここの言い回しを変えたい」「この1枚だけ差し替えたい」に、すぐ対応します。</p>
+      <div class="cards" style="margin-top:40px;">
+        <div class="card">
+          <div class="icon">💬</div>
+          <h3>気軽に言える距離感</h3>
+          <p>修正依頼はチャットで一言でOK。「言いづらいから妥協する」をなくします。</p>
+        </div>
+        <div class="card">
+          <div class="icon">🔁</div>
+          <h3>直しの往復が速い</h3>
+          <p>軽微な修正は最短即日で反映。商談前日の「あと1枚だけ」にも対応できます。</p>
+        </div>
+      </div>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">6 / 11</div>
+  </section>
+
+  <!-- 7. フロー -->
+  <section class="slide">
+    <div class="kicker">PROCESS</div>
+    <h2>ご依頼から納品までの流れ</h2>
+    <div class="grow">
+      <div class="steps">
+        <div class="step"><div class="no">STEP 1</div><h3>ヒアリング</h3><p>用途・聞き手・伝えたい結論を確認。メモや箇条書きのままで大丈夫です。</p></div>
+        <div class="step"><div class="no">STEP 2</div><h3>構成案の確認</h3><p>スライドの流れ（目次案）を先にお見せし、方向性を合意してから作ります。</p></div>
+        <div class="step"><div class="no">STEP 3</div><h3>初稿お届け</h3><p>全スライドをデザインまで仕上げた状態でお届けします。</p></div>
+        <div class="step"><div class="no">STEP 4</div><h3>修正 → 納品</h3><p>フィードバックを反映して完成。納品形式はご相談ください（PDF等）。</p></div>
+      </div>
+      <p class="lead" style="font-size:18px;margin-top:36px;">※ 途中経過は随時共有します。「出来上がるまで見えない」不安はありません。</p>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">7 / 11</div>
+  </section>
+
+  <!-- 8. 対応範囲 -->
+  <section class="slide">
+    <div class="kicker">SCOPE</div>
+    <h2>対応できる資料</h2>
+    <div class="grow">
+      <div class="cols">
+        <div class="col">
+          <ul class="clean">
+            <li>セミナー・研修・勉強会のスライド</li>
+            <li>営業資料・サービス提案書</li>
+            <li>会社説明・採用ピッチ資料</li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul class="clean">
+            <li>登壇・プレゼン用スライド</li>
+            <li>既存資料のデザイン刷新</li>
+            <li>マニュアル・説明資料の図解化</li>
+          </ul>
+        </div>
+      </div>
+      <p class="lead" style="font-size:18px;margin-top:36px;">上記以外も、まずはお気軽にご相談ください。</p>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">8 / 11</div>
+  </section>
+
+  <!-- 9. デザイン原則 -->
+  <section class="slide">
+    <div class="kicker">QUALITY</div>
+    <h2>品質を支える、4つのデザイン原則</h2>
+    <div class="grow">
+      <div class="grid4">
+        <div class="cell"><div class="icon">⬜</div><div><h3>余白で読ませる</h3><p>詰め込まず、視線が自然に流れる余白を設計します。</p></div></div>
+        <div class="cell"><div class="icon">🔠</div><div><h3>情報に階層をつける</h3><p>見出し・本文・補足のメリハリで、3秒で要点が掴めるように。</p></div></div>
+        <div class="cell"><div class="icon">🎨</div><div><h3>色は絞って使う</h3><p>基本色＋強調色のみ。派手さではなく「見やすさ」を優先します。</p></div></div>
+        <div class="cell"><div class="icon">🔢</div><div><h3>数字と図で語る</h3><p>主張には根拠を。データは表よりグラフ・図解で示します。</p></div></div>
+      </div>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">9 / 11</div>
+  </section>
+
+  <!-- 10. 料金 -->
+  <section class="slide">
+    <div class="kicker">PRICE</div>
+    <h2>料金・納期について</h2>
+    <div class="grow">
+      <p class="lead" style="margin-top:0;">枚数・内容・素材の有無によって最適なお見積りをご提案します。<br>「だいたいこんな内容で、何枚くらい」の概要だけで概算をお出しできます。</p>
+      <div class="cards" style="margin-top:40px;">
+        <div class="card">
+          <div class="icon">📩</div>
+          <h3>お見積りは無料</h3>
+          <p>ご相談・お見積りに費用はかかりません。比較検討の材料としてもどうぞ。</p>
+        </div>
+        <div class="card">
+          <div class="icon">🤝</div>
+          <h3>追加費用は事前合意</h3>
+          <p>作業範囲が変わる場合は必ず事前にご相談。「あとから請求」は行いません。</p>
+        </div>
+      </div>
+    </div>
+    <div class="brand">スライド作成代行</div><div class="num">10 / 11</div>
+  </section>
+
+  <!-- 11. CTA -->
+  <section class="slide cover statement">
+    <div class="kicker" style="color:#ffb385;">CONTACT</div>
+    <h2 style="color:#fff;">まずは、メッセージで<br>お気軽にご相談ください。</h2>
+    <p class="lead">「こんな資料を作りたい」の一言で大丈夫です。<br>このスライドと同じ品質で、あなたの資料をお作りします。</p>
+    <div class="num">11 / 11</div>
+  </section>
+
+</div></div>
+
+<div id="nav"></div>
+<div class="hint">← → キーで移動</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const nav=document.getElementById('nav');
+  let cur=0;
+  slides.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' on':'');
+    d.onclick=()=>go(i);
+    nav.appendChild(d);
+  });
+  const dots=[...nav.children];
+  function go(i){
+    if(i<0||i>=slides.length)return;
+    slides[cur].classList.remove('active');dots[cur].classList.remove('on');
+    cur=i;
+    slides[cur].classList.add('active');dots[cur].classList.add('on');
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')go(cur+1);
+    if(e.key==='ArrowLeft')go(cur-1);
+  });
+  document.getElementById('stage').addEventListener('click',e=>{
+    if(e.target.closest('#nav'))return;
+    go(e.clientX>innerWidth/2?cur+1:cur-1);
+  });
+  function fit(){
+    const s=Math.min(innerWidth/1280,innerHeight/720)*0.97;
+    document.getElementById('deck').style.transform=`scale(${s})`;
+  }
+  fit();addEventListener('resize',fit);
+</script>
+</body>
+</html>
