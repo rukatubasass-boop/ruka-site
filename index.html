@@ -19,7 +19,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2317140f'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='34' fill='%23f4f1ea'%3ER%3C/text%3E%3Crect x='0' y='56' width='64' height='8' fill='%23df5f1b'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Hanken+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Old+Mincho:wght@400;500;600;700;900&family=Hanken+Grotesk:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>window.RUKA_ANALYTICS_ID = "";</script>
 </head>
@@ -32,8 +32,8 @@
     <a class="brand" href="#top">RUKA</a>
     <div class="nav-links">
       <a href="#works">実績</a>
+      <a href="#process">制作環境</a>
       <a href="#scope">依頼できる範囲</a>
-      <a href="#flow">進め方</a>
       <a class="nav-cta" href="#contact">相談する</a>
     </div>
     <button class="nav-menu-btn" id="nav-menu-btn" aria-label="メニューを開く" aria-expanded="false" aria-controls="menu-overlay">Menu</button>
@@ -43,8 +43,8 @@
     <button class="menu-close" id="menu-close" aria-label="メニューを閉じる">×</button>
     <nav class="menu-links" aria-label="モバイルメニュー">
       <a href="#works">実績</a>
+      <a href="#process">制作環境</a>
       <a href="#scope">依頼できる範囲</a>
-      <a href="#flow">進め方</a>
       <a href="#contact">相談する</a>
     </nav>
   </div>
@@ -107,7 +107,51 @@
       </article>
     </section>
 
-    <section class="scope" id="scope" aria-labelledby="scope-title" data-num="02">
+    <section class="process" id="process" aria-labelledby="process-title" data-num="02">
+      <div class="section-head" data-reveal>
+        <p class="section-label">MAKING WITH CLAUDE CODE</p>
+        <h2 id="process-title">構成から検品まで、<br>画面で確かめながら作る。</h2>
+        <p class="section-note">制作にはClaude Codeを使い、要件の整理・実装・表示確認を往復します。AI任せにせず、完成画面と納品物を人の目で確認します。</p>
+      </div>
+
+      <div class="hiw-collab">
+        <div class="hiw-mock" data-reveal aria-label="RUKAとClaude Codeが制作画面を確認するイメージ図">
+          <div class="hiw-bar"><div class="hiw-tabs"><span>Brief</span><span class="active">Build</span><span>Check</span></div><div class="hiw-bar-right"><div class="hiw-avatars" aria-hidden="true"><i></i><i></i></div><span class="hiw-btn">Preview</span><span class="hiw-btn dark">Ready</span></div></div>
+          <div class="hiw-frames">
+            <div class="hiw-frame"><div class="hiw-cap"><b></b>構成</div><div class="hiw-blk h"></div><div class="hiw-blk m"></div><div class="hiw-blk box"></div></div>
+            <div class="hiw-frame sel"><div class="hiw-cap"><b></b>営業資料</div><div class="hiw-blk h"></div><div class="hiw-blk box"></div><div class="hiw-blk m"></div></div>
+            <div class="hiw-frame"><div class="hiw-cap"><b></b>公開前</div><div class="hiw-blk h"></div><div class="hiw-blk s"></div><div class="hiw-blk box"></div></div>
+          </div>
+          <div class="hiw-cursor hiw-c-ruka" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2l16 7-6 2-2 6z"/></svg><span class="hiw-tag-c">RUKA</span></div>
+          <div class="hiw-cursor hiw-c-claude" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2l16 7-6 2-2 6z"/></svg><span class="hiw-tag-c">Claude Code</span></div>
+        </div>
+        <div class="hiw-copy">
+          <p class="hiw-eyebrow" data-reveal>DESIGN + BUILD</p>
+          <h3 data-reveal>見た目も動きも、<br>納品前に確認する。</h3>
+          <p data-reveal>相談内容をそのまま実装せず、先に構成を整理します。画面にしてから文字・余白・リンク・スマホ表示を確認し、修正点を反映して納品します。</p>
+          <div class="hiw-feats">
+            <div class="hiw-feat" data-reveal><div class="hiw-ico">01</div><h4>構成を先に合わせる</h4><p>誰に何を伝えるかを、制作前に見える形へ。</p></div>
+            <div class="hiw-feat" data-reveal><div class="hiw-ico">02</div><h4>実物で確認する</h4><p>生成後に画面を見て、崩れや表記を整える。</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hiw-steps" data-process-steps>
+        <div class="hiw-tree" aria-hidden="true"><div class="hiw-ln hiw-trunk"></div><div class="hiw-ln hiw-branch"></div><div class="hiw-ln hiw-drop hiw-d1"></div><div class="hiw-ln hiw-drop hiw-d2"></div><div class="hiw-ln hiw-drop hiw-d3"></div></div>
+        <div class="hiw-steps-grid">
+          <article class="hiw-card"><p class="hiw-c-eyebrow">01 / BRIEF</p><h3>整理</h3><p class="hiw-desc">素材・用途・相手を整理し、ページやスライドの順番を固める。</p><div class="hiw-pv"><div class="hiw-sm"><div class="hiw-node root"><span class="hiw-dot"></span>目的</div><div class="hiw-kids"><div class="hiw-node"><span class="hiw-dot"></span>構成</div><div class="hiw-node"><span class="hiw-dot"></span>素材</div><div class="hiw-node"><span class="hiw-dot"></span>CTA</div></div></div></div></article>
+          <article class="hiw-card"><p class="hiw-c-eyebrow">02 / BUILD</p><h3>制作</h3><p class="hiw-desc">Claude Codeも使いながら、画面と納品物を実装して確認する。</p><div class="hiw-pv"><div class="hiw-wf"><div class="hiw-wbar top"></div><div class="hiw-hero"><div class="l"><i></i><i></i></div><div class="r"></div></div></div></div></article>
+          <article class="hiw-card"><p class="hiw-c-eyebrow">03 / QA</p><h3>検品</h3><p class="hiw-desc">リンク、表示、表記ゆれを確認し、使える状態に整えて渡す。</p><div class="hiw-pv"><div class="hiw-sg"><div class="hiw-swatch s1"></div><div class="hiw-type">Aa</div><div class="hiw-swatch s3"></div><div class="hiw-swatch s2"></div><div class="hiw-swatch s4"></div></div></div></article>
+        </div>
+      </div>
+
+      <div class="process-media" data-reveal>
+        <figure class="process-screen"><img src="assets/work-site.png" alt="Claude Codeと制作した旧サイトのデザイン検証画面" loading="lazy" width="1280" height="800"><figcaption>デザイン検証の過去画面。構成・余白・動きを画面で見ながら詰める。</figcaption></figure>
+        <figure class="process-video"><div class="phone-frame"><video src="assets/work-reel.mp4" poster="assets/work-video.png" muted loop playsinline preload="metadata" width="540" height="960" aria-label="Claude Codeを使った動画制作サンプル" data-hover-video></video></div><figcaption>動画制作の試作。カーソルを乗せると再生。</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="scope" id="scope" aria-labelledby="scope-title" data-num="03">
       <div class="section-head" data-reveal>
         <p class="section-label">SCOPE</p>
         <h2 id="scope-title">依頼できる範囲</h2>
@@ -120,7 +164,7 @@
       </div>
     </section>
 
-    <section class="flow" id="flow" aria-labelledby="flow-title" data-num="03">
+    <section class="flow" id="flow" aria-labelledby="flow-title" data-num="04">
       <div class="section-head" data-reveal>
         <p class="section-label">FLOW</p>
         <h2 id="flow-title">依頼から納品まで</h2>
@@ -133,7 +177,7 @@
       </ol>
     </section>
 
-    <section class="contact" id="contact" aria-labelledby="contact-title" data-num="04">
+    <section class="contact" id="contact" aria-labelledby="contact-title" data-num="05">
       <div class="contact-copy" data-reveal>
         <p class="section-label">CONTACT</p>
         <h2 id="contact-title">営業資料・LP・<br>簡易自動化の相談はこちら。</h2>
@@ -146,7 +190,7 @@
       </div>
     </section>
 
-    <section class="faq" id="faq" aria-labelledby="faq-title" data-num="05">
+    <section class="faq" id="faq" aria-labelledby="faq-title" data-num="06">
       <div class="section-head" data-reveal><p class="section-label">FAQ</p><h2 id="faq-title">よくある質問</h2></div>
       <div class="faq-list" data-reveal>
         <details open><summary>実績が少なくても依頼して大丈夫？</summary><p>クライアント案件の実績はこれからです。だからこそ、営業スライドの実物と対応範囲を公開し、できること・できないことを事前に合わせます。</p></details>
@@ -159,7 +203,7 @@
   <footer class="footer">
     <div class="footer-grid">
       <div><p class="footer-brand">RUKA</p><p class="footer-note">営業資料・LP・簡易自動化の制作</p></div>
-      <nav class="footer-links" aria-label="フッターナビゲーション"><a href="#works">実績</a><a href="#scope">依頼できる範囲</a><a href="#flow">進め方</a><a href="#contact">相談する</a></nav>
+      <nav class="footer-links" aria-label="フッターナビゲーション"><a href="#works">実績</a><a href="#process">制作環境</a><a href="#scope">依頼できる範囲</a><a href="#contact">相談する</a></nav>
       <a class="to-top" href="#top">BACK TO TOP ↑</a>
     </div>
     <p class="copyright">© 2026 RUKA</p>

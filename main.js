@@ -91,6 +91,7 @@ function setupMotion() {
   const revealItems = document.querySelectorAll("[data-reveal]");
   if (prefersReducedMotion || !window.gsap || !window.ScrollTrigger) {
     revealItems.forEach((item) => { item.style.opacity = "1"; item.style.transform = "none"; });
+    document.querySelector(".process")?.classList.add("is-in");
     return;
   }
 
@@ -151,9 +152,38 @@ function setupMotion() {
       scrollTrigger: { trigger: row, start: "top bottom", end: "bottom top", scrub: true },
     });
   });
+
+  const process = document.querySelector(".process");
+  if (process) {
+    window.ScrollTrigger.create({
+      trigger: process,
+      start: "top 65%",
+      once: true,
+      onEnter: () => process.classList.add("is-in"),
+    });
+  }
+
+  // #process のような深いアンカーで開いた時も、通過済みの要素を隠したままにしない。
+  window.requestAnimationFrame(() => {
+    revealItems.forEach((item) => {
+      if (item.getBoundingClientRect().top < window.innerHeight * .85) {
+        gsap.set(item, { autoAlpha: 1, y: 0 });
+      }
+    });
+    if (process && process.getBoundingClientRect().top < window.innerHeight * .65) process.classList.add("is-in");
+  });
 }
 
 setupMotion();
+
+document.querySelectorAll("[data-hover-video]").forEach((video) => {
+  const play = () => video.play().catch(() => {});
+  const pause = () => { video.pause(); video.currentTime = 0; };
+  video.addEventListener("pointerenter", play);
+  video.addEventListener("pointerleave", pause);
+  video.addEventListener("focus", play);
+  video.addEventListener("blur", pause);
+});
 
 if (!prefersReducedMotion && window.gsap) {
   const { gsap } = window;
