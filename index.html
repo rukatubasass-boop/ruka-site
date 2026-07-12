@@ -26,6 +26,7 @@
 <body>
   <a class="skip-link" href="#main">本文へ移動</a>
   <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="page-transition" aria-hidden="true"></div>
 
   <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
     <a class="brand" href="#top">RUKA</a>
@@ -50,34 +51,50 @@
 
   <header class="hero" id="top">
     <p class="hero-watermark" aria-hidden="true">MAKE<br>IT CLEAR</p>
+    <span class="hero-orbit orbit-one" aria-hidden="true"></span>
+    <span class="hero-orbit orbit-two" aria-hidden="true"></span>
+    <p class="hero-vertical" data-intro>CW PORTFOLIO / 2026</p>
     <div class="hero-main">
-      <p class="eyebrow">CROWDWORKS / REMOTE</p>
-      <h1>営業資料・LP・<br>簡易自動化を、<br><em>伝わる形に。</em></h1>
-      <p class="hero-desc">メモや箇条書きから、構成の整理・制作・全体チェックまで。<br class="pc-only">Claude Codeを活用して、制作と修正を速く進めます。</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="#contact" data-track="hero_contact">制作を相談する</a>
-        <a class="btn-ghost" href="#works" data-track="hero_work">営業資料の実物を見る</a>
+      <p class="eyebrow" data-intro>CROWDWORKS / REMOTE</p>
+      <h1 class="hero-title" aria-label="営業資料・LP・簡易自動化を、伝わる形に。">
+        <span class="line"><span class="line-inner">営業資料・LP・</span></span>
+        <span class="line"><span class="line-inner">簡易自動化を、</span></span>
+        <span class="line line-accent"><span class="line-inner">伝わる形に。</span></span>
+      </h1>
+      <p class="hero-desc" data-intro>メモや箇条書きから、構成の整理・制作・全体チェックまで。<br class="pc-only">Claude Codeを活用して、制作と修正を速く進めます。</p>
+      <div class="hero-actions" data-intro>
+        <a class="btn-primary" href="#contact" data-track="hero_contact" data-magnet>制作を相談する <span>↗</span></a>
+        <a class="btn-ghost" href="#works" data-track="hero_work" data-magnet>営業資料の実物を見る</a>
       </div>
-      <p class="hero-note">対応範囲と納期は、ご依頼内容を確認してからご案内します。</p>
+      <p class="hero-note" data-intro>対応範囲と納期は、ご依頼内容を確認してからご案内します。</p>
     </div>
+    <dl class="hero-status" data-intro>
+      <div><dt>PRIMARY</dt><dd>営業スライド 11 pages</dd></div>
+      <div><dt>SCOPE</dt><dd>資料 / LP / 簡易自動化</dd></div>
+      <div><dt>STATUS</dt><dd>相談受付中</dd></div>
+      <div><dt>JST</dt><dd id="stat-clock">--:--</dd></div>
+    </dl>
+    <div class="hero-roll" aria-hidden="true"><div><span>RUKA — MAKE IT CLEAR — </span><span>RUKA — MAKE IT CLEAR — </span></div></div>
   </header>
 
+  <div class="marquee" aria-hidden="true"><div class="marquee-track"><div class="marquee-group"><span>SALES DECK</span><b>✦</b><span>STATIC LP</span><b>✦</b><span>WORKFLOW AUTOMATION</span><b>✦</b><span>STRUCTURE → DESIGN → QA</span><b>✦</b></div><div class="marquee-group"><span>SALES DECK</span><b>✦</b><span>STATIC LP</span><b>✦</b><span>WORKFLOW AUTOMATION</span><b>✦</b><span>STRUCTURE → DESIGN → QA</span><b>✦</b></div></div></div>
+
   <main id="main">
-    <section class="proof" id="works" aria-labelledby="works-title">
-      <div class="section-head">
+    <section class="proof" id="works" aria-labelledby="works-title" data-num="01">
+      <div class="section-head" data-reveal>
         <p class="section-label">FEATURED WORK</p>
         <h2 id="works-title">営業スライド11枚を、<br>実物で公開。</h2>
         <p class="section-note">これはクライアント実績ではなく、自分で制作した品質サンプルです。誇張せず、実物で判断してもらえます。</p>
       </div>
-      <article class="featured-work">
-        <a class="work-preview" href="works/slide-deck/" target="_blank" rel="noopener" aria-label="営業スライド11枚の実物を開く" data-track="deck_open">
+      <article class="featured-work work-row">
+        <a class="work-preview work-media" href="works/slide-deck/" target="_blank" rel="noopener" aria-label="営業スライド11枚の実物を開く" data-track="deck_open" data-reveal>
           <div class="browser-frame">
             <div class="frame-bar"><i></i><i></i><i></i><span>営業スライド制作サンプル / 11 pages</span></div>
             <img src="assets/work-slides.png" alt="営業スライド制作サンプルの表紙" width="640" height="360">
           </div>
           <span class="preview-link">実物を開く <b>→</b></span>
         </a>
-        <div class="work-copy">
+        <div class="work-copy" data-reveal>
           <p class="work-num">01 / SAMPLE</p>
           <h3>構成から考える<br>営業資料制作</h3>
           <dl class="work-rows">
@@ -90,63 +107,48 @@
       </article>
     </section>
 
-    <section class="scope" id="scope" aria-labelledby="scope-title">
-      <div class="section-head">
+    <section class="scope" id="scope" aria-labelledby="scope-title" data-num="02">
+      <div class="section-head" data-reveal>
         <p class="section-label">SCOPE</p>
         <h2 id="scope-title">依頼できる範囲</h2>
         <p class="section-note">まずは納品物を作るご依頼に絞って受けます。継続コンサル・SNS運用代行は現在受けていません。</p>
       </div>
-      <div class="scope-grid">
-        <article class="scope-card">
-          <p class="scope-num">01</p>
-          <h3>営業資料・スライド</h3>
-          <p>営業資料、サービス紹介、セミナー・研修資料、既存資料のリデザイン。</p>
-          <ul><li>構成案から確認</li><li>全ページを目視チェック</li><li>PDFを基本に納品形式を相談</li></ul>
-        </article>
-        <article class="scope-card">
-          <p class="scope-num">02</p>
-          <h3>静的LP・Webページ</h3>
-          <p>1ページの紹介サイト、LP、ポートフォリオ、既存ページの軽い改修。</p>
-          <ul><li>必要な情報を整理</li><li>スマホ表示を確認</li><li>公開前にリンクと表示を検証</li></ul>
-        </article>
-        <article class="scope-card">
-          <p class="scope-num">03</p>
-          <h3>定型業務の簡易自動化</h3>
-          <p>転記・下書き作成・定期レポートなど、繰り返し作業を減らす小さな仕組み。</p>
-          <ul><li>今の作業を先に整理</li><li>対応可否と範囲を事前に合意</li><li>使い方を添えて納品</li></ul>
-        </article>
+      <div class="service-list" data-reveal>
+        <details class="service-item" open><summary><span class="scope-num">01</span><span>営業資料・スライド</span><i aria-hidden="true">＋</i></summary><div class="service-body"><p>営業資料、サービス紹介、セミナー・研修資料、既存資料のリデザイン。</p><ul><li>構成案から確認</li><li>全ページを目視チェック</li><li>PDFを基本に納品形式を相談</li></ul></div></details>
+        <details class="service-item"><summary><span class="scope-num">02</span><span>静的LP・Webページ</span><i aria-hidden="true">＋</i></summary><div class="service-body"><p>1ページの紹介サイト、LP、ポートフォリオ、既存ページの軽い改修。</p><ul><li>必要な情報を整理</li><li>スマホ表示を確認</li><li>公開前にリンクと表示を検証</li></ul></div></details>
+        <details class="service-item"><summary><span class="scope-num">03</span><span>定型業務の簡易自動化</span><i aria-hidden="true">＋</i></summary><div class="service-body"><p>転記・下書き作成・定期レポートなど、繰り返し作業を減らす小さな仕組み。</p><ul><li>今の作業を先に整理</li><li>対応可否と範囲を事前に合意</li><li>使い方を添えて納品</li></ul></div></details>
       </div>
     </section>
 
-    <section class="flow" id="flow" aria-labelledby="flow-title">
-      <div class="section-head">
+    <section class="flow" id="flow" aria-labelledby="flow-title" data-num="03">
+      <div class="section-head" data-reveal>
         <p class="section-label">FLOW</p>
         <h2 id="flow-title">依頼から納品まで</h2>
       </div>
       <ol class="flow-list">
-        <li><span>01</span><div><h3>相談</h3><p>作りたいもの、用途、希望納期、素材の有無を送ってください。まとまっていなくても大丈夫です。</p></div></li>
-        <li><span>02</span><div><h3>範囲と見積りの確認</h3><p>対応できる範囲、納期、納品形式を確認します。合意前に制作は始めません。</p></div></li>
-        <li><span>03</span><div><h3>構成・制作</h3><p>必要に応じて構成案を先に確認し、合意後に制作します。</p></div></li>
-        <li><span>04</span><div><h3>確認・納品</h3><p>リンク、表示、表記ゆれなどを確認して納品します。修正範囲は案件ごとに事前に決めます。</p></div></li>
+        <li data-reveal><span>01</span><div><h3>相談</h3><p>作りたいもの、用途、希望納期、素材の有無を送ってください。まとまっていなくても大丈夫です。</p></div></li>
+        <li data-reveal><span>02</span><div><h3>範囲と見積りの確認</h3><p>対応できる範囲、納期、納品形式を確認します。合意前に制作は始めません。</p></div></li>
+        <li data-reveal><span>03</span><div><h3>構成・制作</h3><p>必要に応じて構成案を先に確認し、合意後に制作します。</p></div></li>
+        <li data-reveal><span>04</span><div><h3>確認・納品</h3><p>リンク、表示、表記ゆれなどを確認して納品します。修正範囲は案件ごとに事前に決めます。</p></div></li>
       </ol>
     </section>
 
-    <section class="contact" id="contact" aria-labelledby="contact-title">
-      <div class="contact-copy">
+    <section class="contact" id="contact" aria-labelledby="contact-title" data-num="04">
+      <div class="contact-copy" data-reveal>
         <p class="section-label">CONTACT</p>
         <h2 id="contact-title">営業資料・LP・<br>簡易自動化の相談はこちら。</h2>
         <p>メールなら、内容を残しながらやり取りできます。件名に「サイトを見た」と入れてもらえれば、用途と希望納期を確認して返信します。</p>
       </div>
-      <div class="contact-actions">
-        <a class="contact-email" href="mailto:rukatubasass@gmail.com?subject=%E3%80%90%E3%82%B5%E3%82%A4%E3%83%88%E3%82%92%E8%A6%8B%E3%81%9F%E3%80%91%E5%88%B6%E4%BD%9C%E3%81%AE%E7%9B%B8%E8%AB%87&amp;body=%E5%88%B6%E4%BD%9C%E3%81%97%E3%81%9F%E3%81%84%E3%82%82%E3%81%AE%EF%BC%9A%0A%E7%94%A8%E9%80%94%EF%BC%9A%0A%E5%B8%8C%E6%9C%9B%E7%B4%8D%E6%9C%9F%EF%BC%9A%0A%E6%89%80%E6%9C%89%E3%81%99%E3%82%8B%E7%B4%A0%E6%9D%90%EF%BC%9A" data-track="contact_email">メールで相談する <span>→</span></a>
-        <a class="contact-x" href="https://x.com/krk__kr" target="_blank" rel="noopener" data-track="contact_x">XのDMで相談する</a>
+      <div class="contact-actions" data-reveal>
+        <a class="contact-email" href="mailto:rukatubasass@gmail.com?subject=%E3%80%90%E3%82%B5%E3%82%A4%E3%83%88%E3%82%92%E8%A6%8B%E3%81%9F%E3%80%91%E5%88%B6%E4%BD%9C%E3%81%AE%E7%9B%B8%E8%AB%87&amp;body=%E5%88%B6%E4%BD%9C%E3%81%97%E3%81%9F%E3%81%84%E3%82%82%E3%81%AE%EF%BC%9A%0A%E7%94%A8%E9%80%94%EF%BC%9A%0A%E5%B8%8C%E6%9C%9B%E7%B4%8D%E6%9C%9F%EF%BC%9A%0A%E6%89%80%E6%9C%89%E3%81%99%E3%82%8B%E7%B4%A0%E6%9D%90%EF%BC%9A" data-track="contact_email" data-magnet>メールで相談する <span>↗</span></a>
+        <a class="contact-x" href="https://x.com/krk__kr" target="_blank" rel="noopener" data-track="contact_x" data-magnet>XのDMで相談する</a>
         <p class="contact-address">rukatubasass@gmail.com</p>
       </div>
     </section>
 
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-      <div class="section-head"><p class="section-label">FAQ</p><h2 id="faq-title">よくある質問</h2></div>
-      <div class="faq-list">
+    <section class="faq" id="faq" aria-labelledby="faq-title" data-num="05">
+      <div class="section-head" data-reveal><p class="section-label">FAQ</p><h2 id="faq-title">よくある質問</h2></div>
+      <div class="faq-list" data-reveal>
         <details open><summary>実績が少なくても依頼して大丈夫？</summary><p>クライアント案件の実績はこれからです。だからこそ、営業スライドの実物と対応範囲を公開し、できること・できないことを事前に合わせます。</p></details>
         <details><summary>料金と納期はどう決まる？</summary><p>ページ数、素材の有無、修正範囲、納品形式で変わります。相談内容を確認してから、対応可否・見積り・納期を案内します。</p></details>
         <details><summary>何を用意すればいい？</summary><p>箇条書き、既存資料、参考URL、目的だけでも始められます。足りない情報は、最初に確認します。</p></details>
@@ -163,6 +165,8 @@
     <p class="copyright">© 2026 RUKA</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
